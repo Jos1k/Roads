@@ -1,0 +1,85 @@
+﻿@using System.Text
+@model Roads.Web.Mvc.Models.FindRoadDatailsModel
+<link href="~/Content/css/starControl.css" rel="stylesheet"/>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    StringBuilder cities = new StringBuilder();
+    int citiesNumber = @Model.CityPointsNames.Count;
+}
+
+@for (int i = 0; i < citiesNumber; i++)
+{
+    cities.Append(Model.CityPointsNames[i]);
+    if (i < citiesNumber - 1)
+    {
+        cities.Append(", ");
+    }
+}
+
+@Styles.Render("~/css/find-road-details")
+
+@section RoadHead{
+    
+}
+
+<div class="row">
+    <div class="row">
+        @{
+            <h1 style="margin-left: 5%; color:#36b4a7;">@Model.RouteSummary.From <i class="fa fa-angle-double-right"></i> @Model.RouteSummary.To</h1>
+        }
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                @{
+                    Html.RenderPartial("Partial/FRDCityPointsPView", @Model.CityPointsNames);
+                }
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                @{
+                    Html.RenderPartial("Partial/FRDMainSummaryPView", @Model.RouteSummary);
+                    Html.RenderPartial("Partial/FRDFeedbacksAreaPView", @Model.RDNodesData);
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (@Model.HasErrorAddFeedback)
+{
+
+    <div class="modal fade" id="ErrorWindow">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@Html.GetLabel("G_Error_Title")</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.GetLabel("FRD_LeaveFeedback_MandatoryError")
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" data-dismiss="modal">@Html.GetLabel("G_Button_Close")</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <script>
+        $(document).ready(function() {
+                $('#ErrorWindow').modal({
+                    keyboard: false
+                });
+        });
+    </script>
+}
+@Scripts.Render("~/js/find-road-details")
+
+
+@section SEOTags
+{
+    <meta name="description" content="@Html.GetLabel("FRD_Input_Description")" />
+    <meta name="keywords" content="@Html.GetLabel("FRD_Input_Keywords"), @cities.ToString()" />
+    <title>@Html.GetLabel("FRD_Input_Title") : @Model.RouteSummary.From - @Model.RouteSummary.To</title>
+}

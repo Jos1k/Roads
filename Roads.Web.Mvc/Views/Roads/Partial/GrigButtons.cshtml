@@ -1,0 +1,121 @@
+﻿@using Roads.Web.Mvc.Helpers
+@model  Roads.Web.Mvc.Models.ListRoadsViewModel
+@{
+    int page = Model.PageNumber + 1;
+
+    int numberOfShownRecords = page == 1 ? Model.RoadsList.Count() : page * Model.RecordsPerPage;
+
+    long numberOfButtons = Model.RecordsPerPage > 0 ? Model.NumberOfFound / Model.RecordsPerPage : 1;
+
+    if (page == (numberOfButtons + 1))
+    {
+        numberOfShownRecords = (int)Model.NumberOfFound;
+    }
+
+    if (Model.NumberOfFound > (Model.RecordsPerPage * numberOfButtons))
+    {
+        numberOfButtons = numberOfButtons + 1;
+    }
+
+    if (numberOfButtons == 1 && Model.NumberOfFound > Model.RecordsPerPage)
+    {
+        numberOfButtons = 2;
+    }
+
+    int buttonsOnPage = (int)numberOfButtons;
+
+    if (numberOfButtons > page + 5)
+    {
+        if (page == 1)
+        {
+            buttonsOnPage = 6;
+        }
+        else if (page + 3 > numberOfButtons)
+        {
+            buttonsOnPage = (int)numberOfButtons;
+        }
+        else
+        {
+            buttonsOnPage = page + 3;
+        }
+
+    }
+    else
+    {
+        if (page + 3 > numberOfButtons)
+        {
+            buttonsOnPage = (int)numberOfButtons;
+        }
+        else
+        {
+            buttonsOnPage = page + 2;
+        }
+    }
+
+    <script type="text/javascript">
+        function JumpTopage(page) {
+            if (page > 0) {
+
+                var value = page - 1;
+
+                $("#gpPageNumber").val(value);
+
+                $.ajax({
+                    url: "@Url.Action("RoadGrigResult", "Roads")",
+                    type: "POST",
+                    traditional: true,
+                    data: {model: $('#searchFormId').serialize(), isRouteValidation: $('#isRouteValidationPerSearch').prop('checked')},
+                    success: function(data) {
+                        $("#divResultPage").html(data);
+                    }
+                });
+
+                //$("#searchFormId").submit();
+            }
+        }
+    </script>
+
+    using (@Html.BeginHtmlFieldPrefix("SearchResult"))
+    {
+        @Html.HiddenFor(m => m.PageNumber, new { @id = "gpPageNumber" })
+        @Html.HiddenFor(m => m.RecordsPerPage)
+        @Html.HiddenFor(m => m.NumberOfFound)
+        <p>
+            <button type="button" class="btn btn-default disabled">
+                @Html.GetLabel("FR_TextFor_Records") : @numberOfShownRecords @Html.GetLabel("FR_TextFor_of") @Model.NumberOfFound
+            </button>
+            @if (page > 1)
+            {
+                <button type="button" class="btn btn-green" onclick="JumpTopage(1)"><span class="glyphicon glyphicon-fast-backward"></span></button>
+
+                <button type="button" class="btn btn-green" onclick="JumpTopage((@page - 1))"><span class="glyphicon glyphicon-step-backward"></span></button>
+            }
+
+            @for (int pageNumber = page - 2; pageNumber <= buttonsOnPage; pageNumber++)
+            {
+                if (pageNumber > 0)
+                {
+                    if (pageNumber == page)
+                    {
+                        <button type="button" class="btn btn-darkgrey active" onclick="JumpTopage(@pageNumber)">@pageNumber</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-darkgrey" onclick="JumpTopage(@pageNumber)"><strong>@pageNumber</strong></button>
+                    }
+                }
+            }
+
+            @if ((page + 1) <= numberOfButtons)
+            {
+                <button type="button" class="btn btn-green" onclick="JumpTopage((@page + 1))"><span class=" glyphicon glyphicon-step-forward"></span></button>
+
+                <button type="button" class="btn btn-green" onclick="JumpTopage(@numberOfButtons)"><span class="glyphicon glyphicon-fast-forward"></span></button>
+            }
+
+            <button type="button" class="btn btn-green disabled">
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+        </p>
+    }
+}

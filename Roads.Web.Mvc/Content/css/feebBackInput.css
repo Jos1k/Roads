@@ -1,0 +1,93 @@
+﻿.feedBackInputNotEdit {
+    border: none;
+    background: Window;
+}
+
+.feedBackInputEdit {
+    padding: 5px 5px 5px 5px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+    .feedBackInputEdit:focus {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+
+    .table-bordered tr td:nth-child(2) input {
+        display: block;
+        width: 100px !important;
+        }
+    .table-bordered tr td:nth-child(2) {
+        width: 100px !important;
+        border-left: none;
+        }
+    
+    /*.modal-body .form-group .control-label {
+        float: left;
+    }
+     .modal-body .form-group input {
+            margin-left: 31px;
+            display: block;
+            width: 89% !important;
+        }*/
+
+    .field-validation-error {
+    font-weight: bold;
+    color:  #ff0000;
+    text-shadow:0px 0px 0px #ff0000;
+}
+
+
+
+    .feedBackInputEditError {
+    padding: 5px 5px 5px 5px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+    .feedBackInputEditError {
+        border-color: #ff0000;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #ff0000;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #ff0000;
+    }
+
+
+    .table-bordered tr td:nth-child(2) inputError {
+        display: block;
+        width: 100px !important;
+        }
+    .table-bordered tr td:nth-child(2) Error {
+        width: 100px !important;
+        border-left: none;
+        }
+    
+
+    .field-validation-error {
+    font-weight: bold;
+    color:  #ff0000;
+    text-shadow:0px 0px 0px #ff0000;
+}

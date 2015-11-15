@@ -1,0 +1,177 @@
+﻿@model Roads.Web.Mvc.Models.AddRoadModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/AddRoadStepOne/css")
+
+@Scripts.Render("~/AddRoadStepOne/js")
+<!-- Autocomplete not work with mvc bundling. Please do not move autocomplete js and css links. -->
+<script src="~/Content/Scripts/jquery.autocomplete.min.js"></script>
+<link href="~/Content/css/autocomplete-box.css" rel="stylesheet" />
+
+
+<div class="page-header main-theme">
+    <h1>
+        @Html.GetLabel("ARS1_Input_Title") - @Html.GetLabel("ARS1_Input_Title_Step") 1
+        <span class="right btn btn-grean textFloat pull-right " id="ARS1_Button_NextStep" onclick="NextStepButtonClick();">@Html.GetLabel("ARS1_Button_NextStep")  <span class="glyphicon  glyphicon-menu-right" aria-hidden="true"></span></span>
+        <a class="btn btn-darkgrey textFloat pull-right" title="@Html.GetLabel("ARS1_Button_Cancel")" role="button" href="@Url.Action("AddRoad","Roads")"> @Html.GetLabel("ARS1_Button_Cancel")</a>
+
+    </h1>
+</div>
+
+<div class="row main-theme">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div ng-app="AddRoads" ng-init="Init(@Model.CityPoints.Count, @Model.SearchingDepth,'@Html.GetLabel("ARS1_Label_CityName")', '@Model.CityPoints[0].Placeholder','@Model.CityPoints[1].Placeholder');" ng-controller="AddRoadController as manager">
+            <form id="AddForm" method="post" action="@Url.Action("AddRoad","Roads")">
+
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12 inputFontWeightNormal">
+                        <div ng-cloak ng-repeat="CityNode in CityNodes">
+                            <input id="autocompleteHidden{{CityNode.Index}}" class="form-control input-sm" name="[{{CityNode.Index}}].CityId" type="hidden" value="{{CityNode.CityId}}" />
+                            <div class="form-group has-feedback">
+                                <label class="control-label">{{manager.CityLabel}}</label>
+                                <table class="full-size-input">
+                                    <tr>
+                                        <th id="autocompleteAppendTo{{CityNode.Index}}" class="clr-bgr">
+                                            <input id="autocomplete{{CityNode.Index}}" ng-keyup="$('#autocompleteHidden{{CityNode.Index}}').val('');" class="form-control input-lg" name="[{{CityNode.Index}}].CityName" value="{{CityNode.CityName}}" type="text" placeholder="{{CityNode.Placeholder}}" />
+                                        </th>
+                                        <th class="clr-bgr">
+                                            <span ng-show="CityNode.WithDeleteButton" class="fa fa-times fa-lg input-span" aria-hidden="true" ng-click="DeleteCityNode(CityNode.Index)"></span>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div ng-show="CityNode.WithAddButton" class="centerCityNode">
+                                <span class="btn btn-grean" ng-click="AddCityNode(CityNode.Index)">
+                                    <span class=" glyphicon glyphicon-plus " aria-hidden="true"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="scriptSection"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        @*<span class="right btn btn-grean textFloat pull-right " id="ARS1_Button_NextStep" onclick="NextStepButtonClick();">@Html.GetLabel("ARS1_Button_NextStep")  <span class="glyphicon  glyphicon-menu-right" aria-hidden="true"></span></span>
+        <a class="btn btn-darkgrey textFloat pull-right" title="@Html.GetLabel("ARS1_Button_Cancel")" role="button" href="@Url.Action("AddRoad","Roads")"> @Html.GetLabel("ARS1_Button_Cancel")</a>*@
+    </div>
+</div>
+
+
+@if (!String.IsNullOrEmpty(@Model.ErrorMessage))
+{
+    <div class="modal fade" id="ErrorWindow">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@Html.GetLabel("G_Error_Title")</h4>
+                </div>
+                <div class="modal-body">
+                    @Model.ErrorMessage
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" data-dismiss="modal">@Html.GetLabel("G_Button_Close")</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+            $('#ErrorWindow').modal({
+                keyboard: false
+            });
+        });
+    </script>
+}
+
+<div class="modal fade" id="ErrorWindowSearchOfDepth">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">@Html.GetLabel("G_Error_Title")</h4>
+            </div>
+            <div class="modal-body">
+                @Html.GetLabel("ARS1_Error_SearchDeapthMax_Error")
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" data-dismiss="modal">@Html.GetLabel("G_Button_Close")</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="equalCitiesError" class="errorDiv field-validation-error">
+    @Html.GetLabel("ARS1_Error_EqualCitiesError")
+</div>
+
+<div id="emptyCityError" class="errorDiv field-validation-error">
+    @Html.GetLabel("FB_MessageBox_Warning_Content")
+</div>
+
+
+
+@section Script
+{
+    <script type="text/javascript">
+
+        var totalRouteElements = @Model.CityPoints.Count ;
+        
+        function SubmitAddForm() {
+            $('#AddForm').submit();
+        }
+
+        $(document).ready(function() {
+
+            $("#equalCitiesError").hide();
+            $("#emptyCityError").hide();
+        });
+
+        function NextStepButtonClick() {
+            var numberOfCities = totalRouteElements;
+            var allowNext = true;
+
+            for (var j = 0; j < numberOfCities; j++) {
+                $("#autocomplete" + j).removeClass('input-validation-error');
+            }
+            $("#equalCitiesError").hide();
+            $("#emptyCityError").hide();
+
+            for (var i = 0; i < numberOfCities; i++) {
+                var value = $("#autocomplete" + i).val();
+                var data = $("#autocompleteHidden" + i).val();
+
+                for (var j = 0; j < numberOfCities; j++) {
+                    if (i != j) {
+                        if ((value == $("#autocomplete" + j).val() && value !== "")
+                            || (data == $("#autocompleteHidden" + j).val()) && data !== "") {
+                            $("#autocomplete" + j).addClass('input-validation-error');
+                            $("#equalCitiesError").show();
+                            allowNext = false;
+                        }
+                        if (value === "") {
+                            $("#autocomplete" + i).addClass('input-validation-error');
+                            $("#emptyCityError").show();
+                            allowNext = false;
+                        }
+                    }
+                }
+            }
+            if (allowNext == true) {
+                SubmitAddForm();
+            }
+        }
+    </script>
+}
+
+
+@section SEOTags
+{
+    <meta name="description" content="@Html.GetLabel("ARS1_Input_Description")" />
+    <meta name="keywords" content="@Html.GetLabel("ARS1_Input_Keywords")" />
+    <title>@Html.GetLabel("ARS1_Input_Title")</title>
+}

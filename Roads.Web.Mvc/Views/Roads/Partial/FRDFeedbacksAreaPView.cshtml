@@ -1,0 +1,205 @@
+﻿@using System.Globalization
+@using System.Text.RegularExpressions
+@using Roads.Web.Mvc.Models
+@model List<RDNodeData>
+
+<div class="tab-content">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="row">
+            <div class="modal fade" id="myModal-@i">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        @using (Html.BeginForm("AddFeedback", "Roads", new { returnUrl = Request.RawUrl }, FormMethod.Post, new { id = "LeaveFeedbackForm" + i.ToString(CultureInfo.InvariantCulture) }))
+                        {
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">@Html.GetLabel("FRD_Button_LeaveFeedback")</h4>
+                            </div>
+    <div class="modal-body">
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+
+        <fieldset>
+            <label>@Convert.ToString(Html.GetLabel("ADS2_Label_UserName") + " *")</label>
+            <br>
+            @Html.TextBox("UserName", Model[i].LeaveFeedbackWindow.PostModel.UserName, new { @Value = Model[i].LeaveFeedbackWindow.PostModel.UserName, @required = "required" })
+            <br><br>
+            @{
+                            var postModel = Model[i].LeaveFeedbackWindow.PostModel;
+                            string controlsHtmlCode = string.Empty;
+                            string feedbackControlJsCode = "";
+                            foreach (FeedbackControl feedbackControl in Model[i].LeaveFeedbackWindow.Controls)
+                            {
+                                string jsCode = feedbackControl.JSCode;
+
+                                jsCode = jsCode.Replace("getValue", "getValue_" + feedbackControl.NameTranslationKey + "_" + i.ToString(CultureInfo.InvariantCulture));
+                                jsCode = jsCode.Replace("setValue", "setValue_" + feedbackControl.NameTranslationKey + "_" + i.ToString(CultureInfo.InvariantCulture));
+
+
+                                string feedbackControlCorrect = feedbackControl.HTMLCode.Replace("Title", Html.GetDynamicResource(feedbackControl.NameTranslationKey)
+                                                                         + (feedbackControl.IsMandatory ? " *" : ""));
+
+                                var regex = new Regex("((?<=id=\")(\\w*))|((?<=id= \")(\\w*))|((?<= id =\")(\\w*))|((?<=id = \")(\\w*))|((?<=class=\")(\\w*))|((?<=class= \")(\\w*))|((?<= class =\")(\\w*))|((?<=class = \")(\\w*))|((?<=name=\")(\\w*))|((?<=name= \")(\\w*))|((?<= name =\")(\\w*))|((?<=name = \")(\\w*))");
+                                List<string> htmlControlClases = regex.Matches(feedbackControlCorrect).Cast<Match>().Select(match => match.Value).Distinct().ToList();
+                                htmlControlClases.ForEach(x =>
+                                {
+                                    feedbackControlCorrect = feedbackControlCorrect.Replace(x, x + "_" + feedbackControl.NameTranslationKey + "_" + i.ToString(CultureInfo.InvariantCulture));
+                                    jsCode = jsCode.Replace(x, x + "_" + feedbackControl.NameTranslationKey + "_" + i.ToString(CultureInfo.InvariantCulture));
+                                });
+                                controlsHtmlCode += feedbackControlCorrect + "</p>";
+
+                                feedbackControlJsCode = feedbackControlJsCode + jsCode + "\n";
+                            }
+                            controlsHtmlCode += "\n <script type='text/javascript'>\n";
+                            controlsHtmlCode += feedbackControlJsCode;
+                            controlsHtmlCode += "\n</script>\n";
+
+                            string jsString = "<script type='text/javascript'>";
+                            jsString += "\n function setValue" + i.ToString(CultureInfo.InvariantCulture) + "() \n{ \n";
+
+                            for (int index = 0; index < Model[i].LeaveFeedbackWindow.Controls.Count; index++)
+                            {
+                                FeedbackControl feedbackControl = Model[i].LeaveFeedbackWindow.Controls[index];
+
+                                jsString += "$('#" + feedbackControl.NameTranslationKey + "_" + i.ToString(CultureInfo.InvariantCulture) + "_" + index + "').val(getValue_" + feedbackControl.NameTranslationKey + "_" + i.ToString(CultureInfo.InvariantCulture) + "());\n";
+
+                                controlsHtmlCode += "\n<input id='" + feedbackControl.NameTranslationKey + "_" + i.ToString(CultureInfo.InvariantCulture) + "_" + index + "' name='controlValue[" + index + "]' type='hidden' value=''/>\n";
+
+                                @Html.Hidden("feedbackItemId[" + index + "]", feedbackControl.FeedBackItemId)
+                            }
+                            jsString += "\n} \n</script>";
+                            controlsHtmlCode += jsString;
+
+                            string onsubmit = string.Format(" function onsubmit{0}() {{\n setValue{0}();\n $('#LeaveFeedbackForm{1}').submit(); \n}}", @i.ToString(CultureInfo.InvariantCulture), i.ToString(CultureInfo.InvariantCulture));
+            }
+            @Html.Raw(controlsHtmlCode)
+            @Html.Hidden("OriginCityId", postModel.OriginCityId)
+            @Html.Hidden("DestinationCityId", postModel.DestinationCityId)
+
+        </fieldset>
+    </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-default" data-dismiss="modal">@Html.GetLabel("ARS1_Button_Cancel")</a>
+                                <input type="button" onclick="@Html.Raw(string.Format("onsubmit{0}();", @i.ToString(CultureInfo.InvariantCulture)))" class="btn btn-primary" value="@Html.GetLabel("FRD_Button_LeaveFeedback")" />
+                            </div>
+                            <script>
+                                @Html.Raw(onsubmit)
+
+                                $(document).ready(function() {
+                                    $("#myModal-@i").modal('hide');
+                                });
+
+                            </script>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tabs-@i">
+            <div class="row summary">
+                <h2>@Model[i].Summary.From <i class="fa fa-angle-double-right"></i> @Model[i].Summary.To</h2>
+
+                <div class="summaryRow row">
+                    @foreach (RDSummaryControl control in @Model[i].Summary.Controls)
+                    {
+                        int idValue = new Random().Next();
+                        <div class="col-md-6 col-xs-6">
+                            <label>@Html.GetDynamicResource(control.NameTranslationKey)</label>
+                            <div class="row">
+                                <div class="StrRtr">
+                                    <span class="star_rating">
+                                        @{
+                        var checkedValue = (int)control.GetSummuryValue();
+                        for (int j = 1; j < 6; j++)
+                        {
+                            if (j != checkedValue)
+                            {
+                                <input type="radio" name="StrRatingSummary_@control.NameTranslationKey+@idValue" value="@j" id="rating_@i" /><i></i>
+                            }
+                            else
+                            {
+                                <input type="radio" name="StrRatingSummary_@control.NameTranslationKey+@idValue" value="@j" id="rating_@i" checked /><i></i>
+                            }
+                        }
+                                        }
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="row center">
+                <button type="button" class="btn btn-lg leaveFeedbackButton" onclick="showModalDlg('@i')">@Html.GetLabel("FRD_Button_LeaveFeedback") <i class="fa fa-angle-double-right"></i></button>
+            </div>
+            @foreach (RDNodeFeedback feedback in @Model[i].Feedbacks)
+            {
+                <div class="row feedbackFull">
+                    <div class="col-md-1">
+                        <img src="~/Content/Images/some.png" width="50" height="50" />
+                    </div>
+                    <div class="col-md-11 feedback">
+                        <label class="feedback-label">@feedback.UserName (@feedback.SubmitTime.ToShortDateString())</label>
+
+                        @foreach (RDNodeFeedbackValue rdNodeFeedbackValue in @feedback.FeedbackValues)
+                        {
+                            if (rdNodeFeedbackValue.IsNumeric)
+                            {
+                                int idValue = new Random().Next();
+                                <div class="star-control">
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="row strRating">
+                                            <div class="col-md-6">
+                                                <label class="labelFeedbackControl">@Html.GetDynamicResource(rdNodeFeedbackValue.NameTranslationKey)</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="StrRtr">
+                                                    <span class="star_rating">
+                                                        @{
+                                int checkedValue = Convert.ToInt32(rdNodeFeedbackValue.Value);
+                                for (int j = 1; j < 6; j++)
+                                {
+                                    if (j != checkedValue)
+                                    {
+                                        <input type="radio" name="StrRatingFeedback_@rdNodeFeedbackValue.NameTranslationKey+@i+@idValue" value="@j" id="rating_@j" /><i></i>
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" name="StrRatingFeedback_@rdNodeFeedbackValue.NameTranslationKey+@i+@idValue" value="@j" id="rating_@j" checked /><i></i>
+                                    }
+                                }
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>
+                                    @rdNodeFeedbackValue.Value
+                                </p>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<script>
+    var count = @Model.Count;
+
+    function showModalDlg(id)
+    {
+        $("#myModal-"+id).modal('show');
+    }
+</script>

@@ -1,0 +1,106 @@
+﻿@using Roads.Web.Mvc.Models.Enums
+@model Roads.Web.Mvc.Models.DynamicTranslationViewModel
+@{
+    ViewBag.Title = @Html.GetLabel("AZ_EditDT_Title");
+    Layout = "~/Views/AdminZone/Shared/_AdminLayout.cshtml";
+}
+
+<!--Export-links place-->
+<br />
+<h4 style="display: inline">@Html.GetLabel("ETP_Label_Export")</h4>
+@Html.ActionLink("XML", "ExportXml", "AdminZone", new { dataType = ExportDataType.Dynamic }, new { @class = "btn btn-xs btn-info" })
+@Html.ActionLink("CSV", "ExportCsv", "AdminZone", new { dataType = ExportDataType.Dynamic }, new { @class = "btn btn-xs btn-info" })
+<br/>
+<br/>
+<!--Import file place-->
+@Html.Partial("~/Views/AdminZone/Partial/_UploadFile.cshtml", ExportDataType.Dynamic)
+<hr />
+
+@{
+    using (Html.BeginForm("EditDynamicTranslations", "AdminZone", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-12", @id = "editStaticForm" }))
+    {
+        @Html.HiddenFor(m => m.SubmitType)
+        <div class="page-header">
+            <h3>@Html.GetLabel("AZ_EditDT_Title")</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.TranslationKey, new { @class = "form-control", @placeholder = Html.GetLabel("AZ_CreateDT_Title_TranslationKey"), @style = "width: 98%", @autocomplete = "off" })
+                <div style="text-align: center;">
+                    @Html.ValidationMessageFor(m => m.TranslationKey)
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button onclick="Search()" type="button" class="btn btn-info">@Html.GetLabel("FR_Button_Search")</button>
+
+                @Html.ActionLink(Html.GetLabel("AZ_EditDT_Add"), "CreateDynamicTranslation", new { Controller = "AdminZone" }, new { @class = "btn btn-primary" })
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+
+
+        if (Model.DynamicTranslations.Any())
+        {
+            <div class="page-header">
+                <h4 style="color: seagreen">
+                    Edit Dynamic Translations for @Model.TranslationKey
+                </h4>
+            </div>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>@Html.GetLabel("AZ_CreateDT_Title_Language")</th>
+                        <th>@Html.GetLabel("AZ_CreateDT_Title_TranslationKey")</th>
+                        <th>@Html.GetLabel("AZ_CreateDT_Title_Value")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.EditorFor(e => e.DynamicTranslations)
+                    <tr>
+                        <td colspan="100">
+                            <button onclick="Submit()" type="button" class="btn btn-success">@Html.GetLabel("AZ_Link_Save")</button>
+
+                            <a href="@Url.Action("EditDynamicTranslations", new {Controller="AdminZone"})" class="btn btn-warning">@Html.GetLabel("AZ_Link_Cancel")</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        }
+
+        if (Model.SubmitType == "Search" && !string.IsNullOrEmpty(Model.TranslationKey) && !Model.DynamicTranslations.Any())
+        {
+            <div class="page-header">
+                <h4 style="color: #ff0000">
+                    @Html.GetLabel("AZ_EditDT__Title_EditForTitel") @Model.TranslationKey
+                </h4>
+
+            </div>
+            <div style="text-align: center">
+                @Html.GetLabel("AZ_EditDT_Message")
+            </div>
+        }
+    }
+
+    <script type="text/javascript">
+        
+        $(document).ready($('#btnEditDynamicTranslations').addClass('btn-info').removeClass('btn-default'));
+
+        function Search() {
+            $("#SubmitType").val("Search");
+
+            $("#editStaticForm").submit();
+        }
+
+        function Submit() {
+            $("#SubmitType").val("Submit");
+
+            $("#editStaticForm").submit();
+        }
+
+    </script>
+}

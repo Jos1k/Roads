@@ -1,0 +1,14 @@
+﻿<div class="container">
+    <div class="row">
+        <a id="btnEditSiteSetting" class="btn btn-grean" role="button" href="@Url.Action("SiteSettings")">@Html.GetLabel("AZM_Button_SiteSettings")</a>
+
+        <a id="btnFeedbackSettings" class="btn btn-grean" role="button" href="@Url.Action("FeedbackSettings")">@Html.GetLabel("AZM_Button_FeedbackSettings")</a>
+
+        @Html.ActionLink(Html.GetLabel("AZ_Menu_ActionLink_EditStaticTranslations"), "EditStaticTranslations", new { Controller = "AdminZone" }, new { @id = "btnEditStaticTranslations", @class = "btn btn-grean" })
+
+        @Html.ActionLink(Html.GetLabel("AZ_Menu_ActionLink_EditDynamicTranslations"), "EditDynamicTranslations", new { Controller = "AdminZone" }, new { @id = "btnEditDynamicTranslations", @class = "btn btn-grean" })
+
+        @Html.ActionLink(Html.GetLabel("AZ_Menu_ActionLink_MapObject"), "EditMapObjectTranslations", new { Controller = "AdminZone" }, new { @id = "btnManageMapObject", @class = "btn btn-grean" })
+
+    </div>
+</div>

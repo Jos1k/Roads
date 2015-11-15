@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <hgroup>
+        <h1>@Html.GetLabel("ERP_Label_Error"): @ViewBag.ErrorCode</h1>
+        @*<button type="button" class="btn btn-default" onclick="location.href='@Url.Action("FindRoad", "Roads")'">@Html.GetLabel("ERP_Button_BackToSite")</button>*@
+        <h2>@Html.GetLabel("ERP_Label_ErrorMessage")</h2>
+        <h4>@Html.GetLabel("ERP_Label_ErrorDescription"): @ViewBag.Description</h4>
+    </hgroup>
+</div>
+
+@section SEOTags
+{
+    <meta name="description" content="@Html.GetLabel("ERP_Input_Description")" />
+    <meta name="keywords" content="@Html.GetLabel("ERP_Input_Keywords")" />
+    <title>@Html.GetLabel("ERP_Input_Title")</title>
+}

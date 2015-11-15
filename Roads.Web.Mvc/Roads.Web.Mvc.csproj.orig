@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B8991B7D-70AD-4814-91AC-B7FDEB3EC7DC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Roads.Web.Mvc</RootNamespace>
+    <AssemblyName>Roads.Web.Mvc</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>false</IncludeIisSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc">
+      <HintPath>..\packages\Ninject.MVC4.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi">
+      <HintPath>..\packages\Ninject.Web.WebApi.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.2.0.0\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminZoneController.cs" />
+    <Compile Include="Controllers\AjaxController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\RoadsController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Integrations\IImportFileProvider.cs" />
+    <Compile Include="Integrations\ImportFileProviderBase.cs" />
+    <Compile Include="Models\Enums\ExportDataType.cs" />
+    <Compile Include="Models\CreateMapObjectViewModel.cs" />
+    <Compile Include="Models\FRDModels\RDLeaveFeedback.cs" />
+    <Compile Include="Models\FRDModels\RDLeaveFeedbackModel.cs" />
+    <Compile Include="Models\FRDModels\RDLeaveFeedbackValue.cs" />
+    <Compile Include="Models\ManageMapObjectViewModel.cs" />
+    <Compile Include="Service References\RoadsServiceClient\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ImportFileProviders\ImportCsvProvider.cs" />
+    <Compile Include="Services\ImportFileProviders\ImportProviderResolver.cs" />
+    <Compile Include="Services\ImportFileProviders\ImportXmlProvider.cs" />
+    <Compile Include="Services\SwitchLanguageHelper.cs" />
+    <Compile Include="Models\FRDModels\RDNodeFeedbackValue.cs" />
+    <Compile Include="Models\FRDModels\RDSummaryControl.cs" />
+    <Compile Include="Models\FRDModels\RDNodeFeedback.cs" />
+    <Compile Include="Models\FRDModels\RDNodeSummary.cs" />
+    <Compile Include="Models\FRDModels\RDNodeData.cs" />
+    <Compile Include="Models\DynamicTranslations.cs" />
+    <Compile Include="Models\FeedbackItemSettings.cs" />
+    <Compile Include="Models\Language.cs" />
+    <Compile Include="Services\CultureHelper.cs" />
+    <Compile Include="Helpers\HtmlModelBindingHelperExtensions.cs" />
+    <Compile Include="Models\AddRoadModelForStepTwo.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\FindRoadDatailsModel.cs" />
+    <Compile Include="Models\FeedbackControl.cs" />
+    <Compile Include="Models\FeedbackToRouteNode.cs" />
+    <Compile Include="Models\FeedbackItemModel.cs" />
+    <Compile Include="Models\CreateTranslationViewModel.cs" />
+    <Compile Include="Models\TranslationViewModel.cs" />
+    <Compile Include="Models\FindRoadModel.cs" />
+    <Compile Include="Models\AddRoadModel.cs" />
+    <Compile Include="Models\LanguagesViewModel.cs" />
+    <Compile Include="Models\ListRoadsViewModel.cs" />
+    <Compile Include="Models\LogInModel.cs" />
+    <Compile Include="Models\FeedbackValue.cs" />
+    <Compile Include="Models\RoadSearchingResultViewModel.cs" />
+    <Compile Include="Models\SiteSettingsModel.cs" />
+    <Compile Include="Models\DynamicTranslationViewModel.cs" />
+    <Compile Include="Models\StaticTranslationViewModel.cs" />
+    <Compile Include="Models\Suggestion.cs" />
+    <Compile Include="Models\SuggestionsModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ExtensionMethods.cs" />
+    <Compile Include="Services\FilersAttribute\RoadsRegularExpressionAttribute.cs" />
+    <Compile Include="Services\FilersAttribute\RoadsStringLengthAttribute.cs" />
+    <Compile Include="Services\FilersAttribute\RoadsRequiredAttribute.cs" />
+    <Compile Include="Services\FilersAttribute\RoadsDisplayNameAttribute.cs" />
+    <Compile Include="Services\FilersAttribute\RoadsRangeAttribute.cs" />
+    <Compile Include="Services\RoadHelper.cs" />
+    <Compile Include="Services\ITranslationManager.cs" />
+    <Compile Include="Services\TranslationManager.cs" />
+    <Compile Include="Models\ExportModels\DynamicTranslationExport.cs" />
+    <Compile Include="Models\ExportModels\StaticTranslationExport.cs" />
+    <Compile Include="Services\ActionResults\CsvActionResult.cs" />
+    <Compile Include="Services\ActionResults\XmlActionResult.cs" />
+    <Compile Include="Services\ExportDataProvider.cs" />
+    <Compile Include="Services\ExportStringBuilders\CsvStringBuilder.cs" />
+    <Compile Include="Services\ExportStringBuilders\XmlStringBuilder.cs" />
+    <Compile Include="Integrations\ExportStringBuilderBase.cs" />
+    <Compile Include="Integrations\IExportBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\js\bootbox.js" />
+    <Content Include="Content\bootstrap\js\bootbox.min.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\css\export.css" />
+    <Content Include="Content\css\import.css" />
+    <Content Include="Content\icons\export-csv-35x32.png" />
+    <Content Include="Content\icons\export-xml-35x32.png" />
+    <Content Include="Content\Scripts\find-road-details.js" />
+    <Content Include="Content\bootstrap\js\npm.js" />
+    <Content Include="Content\css\find-road-details.css" />
+    <Content Include="Content\css\feebBackInput.css" />
+    <Content Include="Content\css\addRoadStepTwo.css" />
+    <Content Include="Content\css\loginPage.css" />
+    <Content Include="Content\css\Site.css" />
+    <Content Include="Content\css\spinner.css" />
+    <Content Include="Content\css\autocomplete-box.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Scripts\AddRoadStepTwo\AddRoadStepTwo.js" />
+    <Content Include="Content\Scripts\AddRoad\addRoadPage.js" />
+    <Content Include="Content\Scripts\feedbackSettingPageScript.js" />
+    <Content Include="Content\Scripts\jquery.autocomplete.min.js" />
+    <Content Include="Content\Scripts\siteSettings.js" />
+    <Content Include="Content\Scripts\Spiner.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\Scripts\jquery-1.9.1.js" />
+    <None Include="Properties\PublishProfiles\Local MVC Publish.pubxml" />
+    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.form.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.form.min.js.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.3.0.debug.js" />
+    <Content Include="Scripts\knockout-3.3.0.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.map" />
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.DynamicTranslationsData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.FeedbackItemData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.FeedbackModelData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.HolisticFeedback.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.LanguageData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.MapObjectTranslationData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.ObjectTranslationsData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.RouteDetailsData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.RoutesSearchResultData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.SettingData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.StaticTranslationData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RoadsServiceClient\Roads.Web.Mvc.RoadsServiceClient.Suggestion.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\RoadsServiceClient\RoadsService.wsdl" />
+    <None Include="Service References\RoadsServiceClient\Service.disco" />
+    <None Include="Service References\RoadsServiceClient\configuration91.svcinfo" />
+    <None Include="Service References\RoadsServiceClient\configuration.svcinfo" />
+    <None Include="Service References\RoadsServiceClient\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Roads\FindRoad.cshtml" />
+    <Content Include="Views\Roads\Partial\AddRoadStepTwoPartialView.cshtml" />
+    <Content Include="Views\Roads\Datails.cshtml" />
+    <Content Include="Views\AdminZone\FeedbackSettings.cshtml" />
+    <Content Include="Views\Roads\Partial\FRDMainSummaryPView.cshtml" />
+    <Content Include="Views\Roads\Partial\FRDCityPointsPView.cshtml" />
+    <Content Include="Views\Roads\Partial\FRDFeedbacksAreaPView.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FeedbackValue.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FeedbackToRouteNode.cshtml" />
+    <Content Include="Views\Roads\Partial\FindRoadSearchResult.cshtml" />
+    <Content Include="Views\Roads\Partial\GrigButtons.cshtml" />
+    <Content Include="Views\AdminZone\Languages.cshtml" />
+    <Content Include="Views\AdminZone\EditStaticTranslations.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\StaticTranslationData.cshtml" />
+    <Content Include="Views\AdminZone\EditDynamicTranslations.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DynamicTranslationsData.cshtml" />
+    <Content Include="Views\AdminZone\CreateDynamicTranslation.cshtml" />
+    <Content Include="Views\AdminZone\Partial\AddTranslation.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TranslationViewModel.cshtml" />
+    <Content Include="Views\AdminZone\ManageMapObject.cshtml" />
+    <Content Include="Views\AdminZone\CreateMapObject.cshtml" />
+    <None Include="Service References\RoadsServiceClient\Service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RoadsServiceClient\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RoadsServiceClient\Service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RoadsServiceClient\Service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RoadsServiceClient\Service4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+<<<<<<< HEAD
+    <Content Include="Views\AdminZone\Partial\_UploadFile.cshtml" />
+=======
+    <None Include="Web.LocalRelease.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+>>>>>>> dev
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\NavBar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Roads\AddRoad.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Roads\Partial\AddRoadStepOnePartialView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Roads\Partial\AddRoadStepOneRoadInputPartialView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Roads\LogIn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdminZone\SiteSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdminZone\Partial\AdminZoneMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Roads\AddRoadStepTwo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdminZone\Shared\_AdminLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdminZone\Shared\NavBar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Roads.Common.Models\Roads.Common.Models.csproj">
+      <Project>{1764819F-5486-417B-83D4-97C5734240C6}</Project>
+      <Name>Roads.Common.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Roads.Services.RoadsService\Roads.Services.RoadsService.csproj">
+      <Project>{12EFDDF4-76A3-4F87-A33C-F89FC27A55C7}</Project>
+      <Name>Roads.Services.RoadsService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\RoadsServiceClient\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LocalRelease|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>62768</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:62768/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

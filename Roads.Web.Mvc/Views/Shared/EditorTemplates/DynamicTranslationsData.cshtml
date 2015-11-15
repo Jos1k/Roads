@@ -1,0 +1,19 @@
+﻿@model Roads.Web.Mvc.RoadsServiceClient.DynamicTranslationsData
+@{
+    @Html.HiddenFor(s => s.DynamicObjectId)
+    @Html.HiddenFor(s => s.DynamicKey)
+    @Html.HiddenFor(s => s.LanguageId)
+    @Html.HiddenFor(s => s.ExtensionData)
+
+    <tr>
+        <td style="vertical-align: middle">
+            @Model.Lenguage.Name
+        </td>
+        <td>
+            @Html.TextBoxFor(m => m.DynamicKey, new { @class = "form-control" })
+        </td>
+        <td>
+            @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
+        </td>
+    </tr>
+}

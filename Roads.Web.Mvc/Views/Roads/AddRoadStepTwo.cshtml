@@ -1,0 +1,134 @@
+﻿@using System.Text.RegularExpressions
+@using Newtonsoft.Json
+@using Roads.Web.Mvc.Models
+@model Roads.Web.Mvc.Models.AddRoadModelForStepTwo
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var translationKeysList = new List<string>(new[]
+    {
+        "FB_MessageBox_Warning_DataLostOnRefresh_Content",
+        "FB_MessageBox_Warning_Content",
+        "FB_MessageBox_Warning_Content",
+        "FB_Button_SaveAndNext",
+        "FB_Button_SaveAndFinish"
+    });
+}
+<link href="~/Content/css/Site.css" rel="stylesheet" />
+<link href="~/Content/css/feebBackInput.css" rel="stylesheet" />
+
+@Styles.Render("~/addRoadStepTwo/css")
+
+@section SEOTags
+{
+    <meta name="description" content="@Html.GetLabel("ADS2_Input_Description")" />
+    <meta name="keywords" content="@Html.GetLabel("ADS2_Input_Keywords")" />
+    <title>@Html.GetLabel("ARS1_Input_Title")</title>
+}
+
+<div class="page-header  main-theme">
+    <h1>
+        @Html.GetLabel("ARS1_Input_Title") - @Html.GetLabel("ARS1_Input_Title_Step") 2</>
+        <span class="right btn btn-grean textFloat pull-right" onclick=" saveAndFinish() ">@Html.GetLabel("FB_Button_Finish") <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+        <a class="btn btn-darkgrey pull-right" title="@Html.GetLabel("ARS1_Button_Cancel")" role="button" href="@Url.Action("AddRoad", "Roads")">@Html.GetLabel("ARS1_Button_Cancel")</a>
+    </h1>
+
+</div>
+
+<div class="row main-theme">
+    <div class="col-lg-3 col-md-3 col-sm-5 col-xs-6">
+        <div class="cityLabelsStack">
+            @for (int i = 0; i < Model.Feedbacks.Count; i++)
+            {
+                <h3>
+                    <span class="label cityPointLabel clrhover" id="fb_lbl_@Convert.ToString(Model.Feedbacks[@i].FeedbackId + 1)">@Model.Feedbacks[i].OriginCityName.Split(',')[0]</span>
+                </h3>
+
+
+                <span class="btn btn-darkgrey clrhover btn-lg " name="btnRouteNode" id="fb_@Model.Feedbacks[@i].FeedbackId.ToString()"
+                      value="@Model.Feedbacks[@i].OriginCityName.Split(',')[0] - @Model.Feedbacks[@i].DestinationCityName.Split(',')[0]"
+                      onclick=" gotoNextRouteNode(this); ">
+                    <i class="fa fa-arrow-down fa-lg"></i>
+                </span>
+
+                if (i == Model.Feedbacks.Count - 1)
+                {
+                    <h3>
+                        <span class=" label cityPointLabel clrhover" id="fb_lbl_@Convert.ToString(Model.Feedbacks[@i].FeedbackId + 2)">@Model.Feedbacks[i].DestinationCityName.Split(',')[0]</span>
+                    </h3>
+                }
+
+            }
+        </div>
+
+    </div>
+
+    <div class="col-lg-7 col-md-9 col-sm-7 col-xs-6">
+        @using (Html.BeginForm("AddRoadStepTwo2", "Roads", FormMethod.Post, new { name = "SubmitFormForAddRoadStep2", id = "SubmitFormForAddRoadStep2" }))
+        {
+
+            <div class="row main-theme">
+                <div class="col-md-12 cityPointLabelText">
+                    <h2><div id="routeCitiesName" class="cityPointLabelTextLeft">@Model.Feedbacks[0].OriginCityName.Split(',')[0] <i class="fa fa-angle-double-right"></i> @Model.Feedbacks[0].DestinationCityName.Split(',')[0]</div></h2>
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userNameMargin">
+                <div class="row userNameMargin">
+                    @*<label>@Convert.ToString(Html.GetLabel("ADS2_Label_UserName") + ":" + "*")</label>*@
+
+                    <label>@Convert.ToString(Html.GetLabel("ADS2_Label_UserName") + ":")</label>
+                    <span class="cityPointLabelText">*</span>
+
+                    @Html.TextBoxFor(x => (x.UserName), new { @class = "form-control", @Value = @Model.UserName, @required = "required" })
+                    @Html.ValidationMessageFor(x => x.UserName)
+                </div>
+            </div>
+
+
+            <div class="basic" data-average="12" data-id="1"></div>
+            @Html.EditorFor(x => x.Feedbacks)
+
+            string controlsHtmlCode = string.Empty;
+            foreach (FeedbackControl feedbackControl in Model.FeedbackControls)
+            {
+                string feedbackControlCorrect = feedbackControl.HTMLCode.Replace("Title", Html.GetDynamicResource(feedbackControl.NameTranslationKey)
+                                                                                          + (feedbackControl.IsMandatory ? " *" : ""));
+
+                var regex = new Regex("((?<=id=\")(\\w*))|((?<=id= \")(\\w*))|((?<= id =\")(\\w*))|((?<=id = \")(\\w*))|((?<=class=\")(\\w*))|((?<=class= \")(\\w*))|((?<= class =\")(\\w*))|((?<=class = \")(\\w*))|((?<=name=\")(\\w*))|((?<=name= \")(\\w*))|((?<= name =\")(\\w*))|((?<=name = \")(\\w*))");
+                List<string> HTMLControlClases = regex.Matches(feedbackControlCorrect).Cast<Match>().Select(match => match.Value).Distinct().ToList();
+                HTMLControlClases.ForEach(x =>
+                {
+                    feedbackControlCorrect = feedbackControlCorrect.Replace(x, x + "_" + feedbackControl.NameTranslationKey);
+                    feedbackControl.JSCode = feedbackControl.JSCode.Replace(x, x + "_" + feedbackControl.NameTranslationKey);
+                });
+                controlsHtmlCode += feedbackControlCorrect + "</p>";
+            }
+            controlsHtmlCode += "<script type='text/javascript'>";
+            Model.FeedbackControls.ForEach(x => controlsHtmlCode += x.JSCode
+                .Replace("getValue", "getValue_" + x.NameTranslationKey)
+                .Replace("setValue", "setValue_" + x.NameTranslationKey));
+            controlsHtmlCode += "</script>";
+            @Html.Raw(controlsHtmlCode)
+
+            <div class="pull-right">
+                <button class="btn btn-grean pull-right" id="FB_Button_SaveAndNext" type="button" onclick="saveBeforeNextOrSubmit()">
+                    @if (Model.Feedbacks.Count > 1)
+                    {
+                        @Html.GetLabel("FB_Button_SaveAndNext") <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                    }
+                    else
+                    {
+                        @Html.GetLabel("FB_Button_SaveAndFinish") <span class="glyphicon glyphicon-ok" aria-hidden=" true"></span>
+                    }
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    var countOfFeedback = @Html.Raw(JsonConvert.SerializeObject(@Model.Feedbacks.Count));
+    var nameTranslationKeys = @Html.Raw(JsonConvert.SerializeObject(Model.FeedbackControls.Select(x => new {x.NameTranslationKey, x.IsMandatory})));
+    var translationsList = @Html.Raw(JsonConvert.SerializeObject(translationKeysList.Select(x => new {key = x, translation = @Html.GetLabel(x)})));
+</script>
+@Scripts.Render("~/AddRoadStepTwo/js")

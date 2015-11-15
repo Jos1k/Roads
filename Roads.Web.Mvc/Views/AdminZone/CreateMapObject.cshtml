@@ -1,0 +1,71 @@
+﻿@model Roads.Web.Mvc.Models.CreateMapObjectViewModel
+
+@{
+    ViewBag.Title = "CreateMapObject";
+    Layout = "~/Views/AdminZone/Shared/_AdminLayout.cshtml";
+}
+
+@{
+    using (Html.BeginForm("CreateMapObject", "AdminZone", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formCreateMapObject" }))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @Html.GetLabel("AZ_MapObject_Title")
+            </div>
+            <div>
+                <div>
+                    @Html.DropDownListFor(m => m.RegionId, Model.Regions, new { @class = "btn btn-default dropdown-toggle" })
+
+                    @Html.GetLabel("AZ_MapObject_Text_UseRegion")
+
+                    @Html.CheckBoxFor(m => m.UseRegion, new { @id = "checkIsUseRegion" })
+                </div>
+
+
+                @if (Model.Translations.Any())
+                {
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">@Html.GetLabel("AZ_CreateDT_Title_Language")</th>
+                                 
+                                <th>@Html.GetLabel("AZ_CreateDT_Title_Value")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>@Html.GetLabel("AZ_CreateDT_Title_TranslationKey")</td>
+                                <td>@Html.TextBoxFor(m => m.LanguageKey, new { @class = "form-control", @autocomplete = "false" })</td>
+                            </tr>
+                            @Html.EditorFor(e => e.Translations)
+                            <tr>
+                                <td colspan="100">
+                                    <button type="submit" class="btn btn-success">@Html.GetLabel("AZ_Link_Save")</button>
+
+                                    <a href="@Url.Action("EditMapObjectTranslations", new { Controller = "AdminZone" })" class="btn btn-warning">@Html.GetLabel("AZ_Link_Cancel")</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function HideCollums(classes) {
+                for (var k in classes) {
+
+                    var appBanners = document.getElementsByClassName(classes[k]), i;
+
+                    for (var i = 0; i < appBanners.length; i++) {
+                        appBanners[i].style.display = 'none';
+                    };
+
+                };
+            }
+
+            $(document).ready(HideCollums(["tdDescription", "tdLanguageKey"]));
+        </script>
+    }
+}

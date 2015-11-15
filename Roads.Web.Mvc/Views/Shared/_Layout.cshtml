@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/Content/icons/SiteIcon32x32.png">
+
+    @Styles.Render("~/font-awesome/css")
+    @Styles.Render("~/Bootstrap/css")
+    @Styles.Render("~/Themes/css")
+
+    @Scripts.Render("~/jquery/js")
+    @Scripts.Render("~/bootstrap/js")
+    
+</head>
+<body>
+    <div id="wrapper">
+        @RenderPage("~/Views/Shared/Navigation.cshtml")
+        <div class="jumbotron">
+            @RenderSection("RoadHead", required: false)
+        </div>
+        <div id="container" class="site-body">
+            <div class="container">
+                @RenderBody()
+            </div>
+            <div id="clearfix"></div>
+        </div>
+    </div>
+    <div id="footer">
+        @RenderPage("~/Views/Shared/SiteFooter.cshtml")
+    </div>
+    @RenderSection("SEOTags", true)
+    @RenderSection("Script", required: false)
+</body>
+</html>

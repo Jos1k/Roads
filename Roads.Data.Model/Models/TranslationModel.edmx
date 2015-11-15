@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TranslationModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TranslationModelStoreContainer">
+    <EntitySet Name="Languages" EntityType="TranslationModel.Store.Languages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DynamicTranslations" EntityType="TranslationModel.Store.DynamicTranslations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StaticTranslations" EntityType="TranslationModel.Store.StaticTranslations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MapObjectTranslations" EntityType="TranslationModel.Store.MapObjectTranslations" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="LanguageStaticTranslation" Association="TranslationModel.Store.LanguageStaticTranslation">
+      <End Role="Language" EntitySet="Languages" />
+      <End Role="StaticTranslation" EntitySet="StaticTranslations" />
+    </AssociationSet>
+    <AssociationSet Name="LanguageMapObjectTranslation" Association="TranslationModel.Store.LanguageMapObjectTranslation">
+      <End Role="Language" EntitySet="Languages" />
+      <End Role="MapObjectTranslation" EntitySet="MapObjectTranslations" />
+    </AssociationSet>
+    <AssociationSet Name="LanguageDynamicTranslations" Association="TranslationModel.Store.LanguageDynamicTranslations">
+      <End Role="Language" EntitySet="Languages" />
+      <End Role="DynamicTranslations" EntitySet="DynamicTranslations" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Languages">
+    <Key>
+      <PropertyRef Name="LanguageId" />
+    </Key>
+    <Property Name="LanguageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsDefault" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DynamicTranslations">
+    <Key>
+      <PropertyRef Name="DynamicObjectId" />
+    </Key>
+    <Property Name="DynamicObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DescriptionValue" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LanguageId" Type="int" Nullable="false" />
+    <Property Name="DynamicKey" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StaticTranslations">
+    <Key>
+      <PropertyRef Name="StaticTranslationId" />
+    </Key>
+    <Property Name="EnumKey" Type="nvarchar(max)" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LanguageId" Type="int" Nullable="false" />
+    <Property Name="StaticTranslationId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="MapObjectTranslations">
+    <Key>
+      <PropertyRef Name="MapObjectId" />
+    </Key>
+    <Property Name="MapObjectId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LanguageId" Type="int" Nullable="false" />
+    <Property Name="LanguageKey" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="LanguageStaticTranslation">
+    <End Role="Language" Type="TranslationModel.Store.Languages" Multiplicity="1" />
+    <End Role="StaticTranslation" Type="TranslationModel.Store.StaticTranslations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="LanguageId" />
+      </Principal>
+      <Dependent Role="StaticTranslation">
+        <PropertyRef Name="LanguageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LanguageMapObjectTranslation">
+    <End Role="Language" Type="TranslationModel.Store.Languages" Multiplicity="1" />
+    <End Role="MapObjectTranslation" Type="TranslationModel.Store.MapObjectTranslations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="LanguageId" />
+      </Principal>
+      <Dependent Role="MapObjectTranslation">
+        <PropertyRef Name="LanguageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LanguageDynamicTranslations">
+    <End Role="Language" Type="TranslationModel.Store.Languages" Multiplicity="1" />
+    <End Role="DynamicTranslations" Type="TranslationModel.Store.DynamicTranslations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="LanguageId" />
+      </Principal>
+      <Dependent Role="DynamicTranslations">
+        <PropertyRef Name="LanguageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TranslationModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TranslationModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Languages" EntityType="TranslationModel.Language" />
+          <EntitySet Name="DynamicTranslations" EntityType="TranslationModel.DynamicTranslations" />
+          <EntitySet Name="StaticTranslations" EntityType="TranslationModel.StaticTranslation" />
+          <EntitySet Name="MapObjectTranslations" EntityType="TranslationModel.MapObjectTranslation" />
+          <AssociationSet Name="LanguageStaticTranslation" Association="TranslationModel.LanguageStaticTranslation">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="StaticTranslation" EntitySet="StaticTranslations" />
+          </AssociationSet>
+          <AssociationSet Name="LanguageMapObjectTranslation" Association="TranslationModel.LanguageMapObjectTranslation">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="MapObjectTranslation" EntitySet="MapObjectTranslations" />
+          </AssociationSet>
+          <AssociationSet Name="LanguageDynamicTranslations" Association="TranslationModel.LanguageDynamicTranslations">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="DynamicTranslations" EntitySet="DynamicTranslations" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="LanguageId" />
+          </Key>
+          <Property Name="LanguageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StaticTranslations" Relationship="TranslationModel.LanguageStaticTranslation" FromRole="Language" ToRole="StaticTranslation" />
+          <NavigationProperty Name="MapObjectTranslations" Relationship="TranslationModel.LanguageMapObjectTranslation" FromRole="Language" ToRole="MapObjectTranslation" />
+          <NavigationProperty Name="DynamicTranslations" Relationship="TranslationModel.LanguageDynamicTranslations" FromRole="Language" ToRole="DynamicTranslations" />
+        </EntityType>
+        <EntityType Name="DynamicTranslations">
+          <Key>
+            <PropertyRef Name="DynamicObjectId" />
+          </Key>
+          <Property Name="DynamicObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" Nullable="false" />
+          <Property Name="DescriptionValue" Type="String" Nullable="true" />
+          <NavigationProperty Name="Language" Relationship="TranslationModel.LanguageDynamicTranslations" FromRole="DynamicTranslations" ToRole="Language" />
+          <Property Name="LanguageId" Type="Int32" Nullable="false" />
+          <Property Name="DynamicKey" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StaticTranslation">
+          <Key>
+            <PropertyRef Name="StaticTranslationId" />
+          </Key>
+          <Property Name="EnumKey" Type="String" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" Nullable="false" />
+          <NavigationProperty Name="Language" Relationship="TranslationModel.LanguageStaticTranslation" FromRole="StaticTranslation" ToRole="Language" />
+          <Property Name="LanguageId" Type="Int32" Nullable="false" />
+          <Property Name="StaticTranslationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="MapObjectTranslation">
+          <Key>
+            <PropertyRef Name="MapObjectId" />
+          </Key>
+          <Property Name="MapObjectId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" Nullable="false" />
+          <NavigationProperty Name="Language" Relationship="TranslationModel.LanguageMapObjectTranslation" FromRole="MapObjectTranslation" ToRole="Language" />
+          <Property Name="LanguageId" Type="Int32" Nullable="false" />
+          <Property Name="LanguageKey" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="LanguageStaticTranslation">
+          <End Type="TranslationModel.Language" Role="Language" Multiplicity="1" />
+          <End Type="TranslationModel.StaticTranslation" Role="StaticTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="StaticTranslation">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LanguageMapObjectTranslation">
+          <End Type="TranslationModel.Language" Role="Language" Multiplicity="1" />
+          <End Type="TranslationModel.MapObjectTranslation" Role="MapObjectTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="MapObjectTranslation">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LanguageDynamicTranslations">
+          <End Type="TranslationModel.Language" Role="Language" Multiplicity="1" />
+          <End Type="TranslationModel.DynamicTranslations" Role="DynamicTranslations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="DynamicTranslations">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TranslationModelStoreContainer" CdmEntityContainer="TranslationModelContainer">
+    <EntitySetMapping Name="Languages">
+      <EntityTypeMapping TypeName="IsTypeOf(TranslationModel.Language)">
+        <MappingFragment StoreEntitySet="Languages">
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DynamicTranslations">
+      <EntityTypeMapping TypeName="IsTypeOf(TranslationModel.DynamicTranslations)">
+        <MappingFragment StoreEntitySet="DynamicTranslations">
+          <ScalarProperty Name="DynamicObjectId" ColumnName="DynamicObjectId" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="DescriptionValue" ColumnName="DescriptionValue" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="DynamicKey" ColumnName="DynamicKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaticTranslations">
+      <EntityTypeMapping TypeName="IsTypeOf(TranslationModel.StaticTranslation)">
+        <MappingFragment StoreEntitySet="StaticTranslations">
+          <ScalarProperty Name="StaticTranslationId" ColumnName="StaticTranslationId" />
+          <ScalarProperty Name="EnumKey" ColumnName="EnumKey" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MapObjectTranslations">
+      <EntityTypeMapping TypeName="IsTypeOf(TranslationModel.MapObjectTranslation)">
+        <MappingFragment StoreEntitySet="MapObjectTranslations">
+          <ScalarProperty Name="MapObjectId" ColumnName="MapObjectId" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="LanguageKey" ColumnName="LanguageKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

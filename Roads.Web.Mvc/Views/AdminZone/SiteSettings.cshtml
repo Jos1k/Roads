@@ -1,0 +1,71 @@
+﻿@model Roads.Web.Mvc.Models.SiteSettingsModel
+
+@{
+    Layout = "~/Views/AdminZone/Shared/_AdminLayout.cshtml";
+}
+
+@Styles.Render("~/Settings/css")
+
+<script type="text/javascript">
+    $(document).ready($('#btnEditSiteSetting').addClass('btn-info'));
+</script>
+
+<div class="page-header">
+    <h1>@Html.GetLabel("SSP_Label_Legend")</h1>
+</div>
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-xs-5">
+                    <div class="form-group">
+                        <div class="control-label">
+                            @Html.LabelFor(model => model.numberOfRecordsPerPage)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group spinner">
+                    @Html.TextBoxFor(model => model.numberOfRecordsPerPage, new { @class = "form-control", @onkeyup = "NumericOnly(this)", @maxlength = 3 })
+                    <div class="input-group-btn-vertical">
+                        <div class="btn btn-grean" onclick="Increase('numberOfRecordsPerPage')"><i class="fa fa-caret-up"></i></div>
+                        <div class="btn btn-grean" onclick="Decrease('numberOfRecordsPerPage')"><i class="fa fa-caret-down"></i></div>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.numberOfRecordsPerPage)
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-xs-5">
+                    <div class="form-group">
+                        <div class="control-label">
+                            @Html.LabelFor(model => model.searchDepth)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group spinner">
+                    @Html.TextBoxFor(model => model.searchDepth, new { @class = "form-control", @onkeyup = "NumericOnly(this)", @maxlength = 3 })
+                    <div class="input-group-btn-vertical">
+                        <div class="btn btn-grean" onclick="Increase('searchDepth')"><i class="fa fa-caret-up"></i></div>
+                        <div class="btn btn-grean" onclick="Decrease('searchDepth')"><i class="fa fa-caret-down"></i></div>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.searchDepth)
+            </div>
+
+            <p>
+                <input class="btn btn-grean textFloat" type="submit" value=@Html.GetLabel("SSP_Button_Save") />
+            </p>
+
+        </fieldset>
+    }
+</div>
+
+@Scripts.Render("~/SiteSettings/js")

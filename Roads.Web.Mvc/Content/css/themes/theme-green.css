@@ -1,0 +1,408 @@
+﻿html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+    background-color: #fff;
+    font-size: 18px;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    overflow: inherit;
+}
+
+.modal-dialog {
+    z-index: 1041 !important;
+}
+
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+.inputFontWeightNormal th{
+    font-weight: normal;
+}
+
+#wrapper {
+    width: 100%;
+    min-height: 100%;
+    position: relative;
+}
+
+#container {
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#clearfix {
+    height: 405px;
+}
+
+#footer {
+    position: relative;
+    width: 100%;
+    height: 205px;
+    overflow: hidden;
+    margin: -205px 0 0 0;
+    text-shadow: 0 1px #000;
+}
+
+.site-footer {
+    position: relative;
+    padding-top: 10px;
+    height: 205px;
+    color: #ffffff;
+    text-shadow: #000 3px 2px 3px;
+    background-image: url('../../Images/bg-footer.png');
+}
+
+    .site-footer a {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+
+        .site-footer a:hover {
+            color: #9ad9d3;
+            text-decoration: underline;
+        }
+
+    .site-footer ul {
+        list-style-type: none;
+    }
+
+
+
+    .site-footer .vertical-center {
+        padding-top: 40px;
+    }
+
+.navbar-fixed-top {
+    position: absolute;
+}
+
+
+.menu-separator-line {
+    margin-top: 18px;
+    width: 2px;
+    height: 15px;
+    background-color: #ffffff;
+}
+
+.nav-road-theme {
+    background-color: #36b4a7;
+    color: #ffffff;
+    -webkit-box-shadow: 0px 3px 10px 5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 3px 10px 5px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 10px 5px rgba(0,0,0,0.5);
+}
+
+.navbar-brand {
+    padding: 0 15px;
+}
+
+.nav a {
+    color: #ffffff;
+    border-right: 5px #ffffff;
+}
+
+.nav > li > a:hover, .nav > li > a:focus, .nav > li > a:active {
+    background-color: #066359;
+}
+
+.space-left {
+    margin-right: 40px !important;
+}
+
+.space-down {
+    height: 300px !important;
+}
+
+.btn:hover, .btn:focus, .btn.focus {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.center {
+    text-align: center !important;
+}
+
+    .center h1 {
+        color: #ffffff;
+        font-weight: bold;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.5);
+    }
+
+.site-body {
+    background: url('../../Images/container-bg.png') center top repeat-x;
+}
+
+
+.circle-button {
+    background-color: #17867b;
+    margin-top: 5px;
+    margin-right: 5px;
+    padding-top: 9px !important;
+    padding-left: 10px !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border: 0 solid #000000;
+}
+
+.circle-button-active {
+    background-color: #066359 !important;
+    margin-top: 5px;
+    margin-right: 5px;
+    padding-top: 9px !important;
+    padding-left: 10px !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border: 0 solid #000000;
+}
+
+.jumbotron {
+    background-image: url('../../Images/RoadBackground.png') !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 0 !important;
+    padding-bottom: 0;
+    min-height: 150px;
+    -webkit-box-shadow: inset 0px 0px 20px 8px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 20px 8px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 20px 8px rgba(0,0,0,0.75);
+}
+
+.shadow-text {
+    text-shadow: #000000 3px 2px 3px;
+}
+
+    .shadow-text code {
+        text-shadow: none;
+    }
+
+.page-header h1 {
+    color: #36b4a7;
+}
+
+.row div {
+}
+
+.btn-grean {
+    font-weight: bold;
+    background-color: #36b4a7;
+    color: #ffffff;
+}
+
+    .btn-grean:hover {
+        background-color: #17867b;
+        color: #ffffff;
+    }
+
+    .btn-grean:active {
+        background-color: #17867b;
+        color: #ffffff;
+    }
+
+    .btn-grean.clrhover:hover {
+        background-color: #36b4a7;
+        color: #ffffff;
+    }
+
+    .btn-grean .active {
+        background-color: #17867b !important;
+        color: #ffffff;
+    }
+
+
+
+
+input {
+    border: 1px solid #36b4a7 !important;
+}
+
+    input:focus {
+        border: 2px solid #36b4a7 !important;
+    }
+
+.main-theme {
+}
+
+    .main-theme .current-content {
+        background-color: #36b4a7;
+        color: #ffffff;
+        padding: 15px;
+        border-radius: 7px 7px 7px 7px;
+        -moz-border-radius: 7px 7px 7px 7px;
+        -webkit-border-radius: 7px 7px 7px 7px;
+        border: 0px solid #000000;
+    }
+
+        .main-theme .current-content label {
+            color: #ffffff;
+        }
+
+            .main-theme .current-content label.required {
+                margin: 0 1px;
+                color: #ffffff;
+            }
+
+
+    .main-theme label {
+        color: #646464;
+        font-weight: initial;
+        margin-bottom: 5px;
+    }
+
+        .main-theme label.required {
+            margin: 0 5px;
+            color: #36b4a7;
+        }
+
+    .main-theme div {
+        margin-top: 2px;
+    }
+
+    .main-theme th {
+        color: #ffffff;
+        background-color: #36b4a7;
+    }
+
+        .main-theme th.clr-bgr {
+            color: #000;
+            background-color: transparent;
+        }
+
+    .main-theme table tr {
+        border: 1px #36b4a7 !important;
+    }
+
+    .main-theme td {
+        text-align: left;
+    }
+
+        .main-theme td.left {
+            text-align: right;
+            width: 150px;
+        }
+
+        .main-theme td.middle {
+            text-align: center;
+        }
+
+    .main-theme th.middle {
+        text-align: center;
+    }
+
+    .main-theme td a {
+        color: #36b4a7;
+        font-weight: bold;
+    }
+
+    .main-theme h2 {
+        color: #36b4a7;
+    }
+
+    .main-theme td a:hover {
+        color: #17867b;
+        text-decoration: none;
+    }
+
+    .main-theme .btn-green {
+        color: #ffffff;
+        background-color: #9ad9d3;
+    }
+
+        .main-theme .btn-green:hover {
+            background-color: #17867b;
+        }
+
+        .main-theme .btn-green .active {
+            background-color: #17867b !important;
+        }
+
+    .main-theme .btn-green-lg {
+        font-size: 20px;
+        padding: 5px 40px;
+        color: #ffffff;
+        background-color: #36b4a7;
+    }
+
+        .main-theme .btn-green-lg:hover {
+            background-color: #3f9b91;
+        }
+
+        .main-theme .btn-green-lg.active {
+            background-color: #3f9b91 !important;
+        }
+
+ .main-theme .centerCityNode {
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+     margin-top: 20px;
+}
+ 
+ .main-theme .centerRouteCitiesName {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+    .main-theme .btn-darkgrey {
+        color: #ffffff;
+        background-color: #646464;
+    }
+
+        .main-theme .btn-darkgrey:hover {
+            background-color: #17867b;
+        }
+
+        .main-theme .btn-darkgrey.active {
+            background-color: #17867b !important;
+        }
+
+        .main-theme .btn-darkgrey.clrhover:hover {
+            background-color: #646464;
+            color: #ffffff;
+        }
+
+        .main-theme .btn-darkgrey.clrhover.active {
+            background-color: #646464;
+            color: #ffffff;
+        }
+
+/* Responsive [Start] */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .btn-center {
+        text-align: center;
+        float: none !important;
+    }
+
+    .btn-vert-margin {
+        margin: 10px auto;
+    }
+
+    .main-theme .centerElement {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .main-theme td {
+        width: 100%;
+        text-align: left;
+        display: block;
+        white-space: normal !important;
+    }
+}
+
+@media only screen and (min-device-width : 640px) and (max-device-width : 768px) {
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+}
+/* Responsive [End] */

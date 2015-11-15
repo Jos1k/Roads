@@ -1,0 +1,20 @@
+﻿@model List<string>
+
+<div class="row cityPoints center">
+
+    @for (int i = 0; i < @Model.Count; i++)
+    {
+        <div>
+                <h3>
+                    <span id="spanlb-@i" class="label cityPointLabel">@Model[i]</span>
+                </h3>
+        </div>
+        if (i < @Model.Count - 1)
+        {
+            <div>
+                <button id="btn-@i" onclick="selectTab(@i);" type="button" class="btn center-btn btn-darkgrey btn-lg"><i class="fa fa-arrow-down fa-lg"></i></button>
+            </div>
+        }
+    }
+
+</div>

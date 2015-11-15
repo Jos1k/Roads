@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b6b356bd4b034a399de8670b01471b97" Name="Diagram1" ZoomLevel="89" >
+        <EntityTypeShape EntityType="DatabaseModel.RouteNode" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="DatabaseModel.CityNode" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="DatabaseModel.RegionNode" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="DatabaseModel.User" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="DatabaseModel.Feedback" Width="1.5" PointX="5.25" PointY="3.875" />
+        <EntityTypeShape EntityType="DatabaseModel.FeedbackItem" Width="2.25" PointX="7.75" PointY="3.875" />
+        <EntityTypeShape EntityType="DatabaseModel.FeedbackModel" Width="1.5" PointX="7.75" PointY="1.25" />
+        <AssociationConnector Association="DatabaseModel.RouteNodeFeedback" />
+        <AssociationConnector Association="DatabaseModel.CityNodeRouteNodeOrigin" />
+        <AssociationConnector Association="DatabaseModel.CityNodeRouteNodeDestination" />
+        <AssociationConnector Association="DatabaseModel.RegionNodeCityNode" />
+        <AssociationConnector Association="DatabaseModel.UserFeedback" />
+        <AssociationConnector Association="DatabaseModel.FeedbackModelFeedbackItem" />
+        <EntityTypeShape EntityType="DatabaseModel.FeedbackValue" Width="2.25" PointX="10.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Trek" Width="2.125" PointX="10.625" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="DatabaseModel.FeedbackItemFeedbackValue" />
+        <AssociationConnector Association="DatabaseModel.CityNodeTrek" />
+        <AssociationConnector Association="DatabaseModel.CityNodeTrek1" />
+        <EntityTypeShape EntityType="DatabaseModel.Setting" Width="1.5" PointX="14" PointY="4.25" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

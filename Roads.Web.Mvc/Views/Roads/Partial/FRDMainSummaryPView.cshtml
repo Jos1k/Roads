@@ -1,0 +1,46 @@
+﻿@using Roads.Web.Mvc.Models
+@model Roads.Web.Mvc.Models.RDNodeSummary
+
+
+<div class="container" style="width:100%">
+    <div class="page-header">
+        <div class="summaryRow row">
+            @foreach (RDSummaryControl control in @Model.Controls)
+            {
+                <div class="col-md-5 col-xs-4 dark-grey-color">
+                    <label>@Html.GetDynamicResource(control.NameTranslationKey)</label>
+                    <div class="row">
+                        <div class="StrRtr">
+                            <span class="star_rating">
+                                @{
+                                    int checkedValue = (int)control.GetSummuryValue();
+
+                                    for (int i = 1; i < 6; i++)
+                                    {
+                                        if (i != checkedValue)
+                                        {
+                                            <input type="radio" name="StrRating_@control.NameTranslationKey" value="@i" id="rating_@i" /><i></i>
+                                        }
+                                        else
+                                        {
+                                            <input type="radio" name="StrRating_@control.NameTranslationKey" value="@i" id="rating_@i" checked /><i></i>
+                                        }
+                                    }
+                                }
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.StrRtr :input').attr('disabled', true);
+    });
+</script>

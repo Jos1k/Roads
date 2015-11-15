@@ -1,0 +1,19 @@
+﻿@model Roads.Web.Mvc.Models.TranslationViewModel
+@{
+    @Html.HiddenFor(m=>m.ObjectId)
+    
+    <tr>
+        <td style="vertical-align: middle">
+            @Html.DropDownListFor(m => m.LanguageId, Model.Languages, new {@class = "btn btn-default dropdown-toggle"})
+        </td>
+        <td class="tdLanguageKey">
+            @Html.TextBoxFor(m => m.LanguageKey, new { @class = "form-control" })
+        </td>
+        <td>
+            @Html.TextBoxFor(m => m.Value, new {@class = "form-control"})
+        </td>
+        <td class="tdDescription">
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control tdDescription" })
+        </td>
+    </tr>
+}

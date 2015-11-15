@@ -1,0 +1,58 @@
+﻿@model Roads.Web.Mvc.Models.LogInModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/loginPage/css")
+
+<div class="page-header">
+    <h1>@Html.GetLabel("LIP_Label_Legend")</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-xs-8">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <div class="form-group">
+                    <div class="control-label">
+                        @Html.LabelFor(model => model.userName)
+                    </div>
+                    @Html.TextBoxFor(model => model.userName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.userName)
+
+                </div>
+
+                <div class="form-group">
+                    <div class="control-label">
+                        @Html.LabelFor(model => model.password)
+                    </div>
+                    @Html.PasswordFor(model => model.password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.password)
+                </div>
+                
+                @if (ViewBag.LoginFailed == true)
+                {
+                    <div class="field-validation-error">
+                        @Html.GetLabel("SSP_Label_ErrorMsgFailedLogIn")
+                    </div>
+                }
+                
+                <p>
+                    <input class="btn btn-grean" type="submit" value=@Html.GetLabel("SSP_Button_LogIn") />
+                </p>
+            </fieldset>
+        }
+    </div>
+
+</div>
+
+@section SEOTags
+{
+    <meta name="description" content="@Html.GetLabel("LIP_Input_Description")" />
+    <meta name="keywords" content="@Html.GetLabel("LIP_Input_Keywords")" />
+    <title>@Html.GetLabel("LIP_Input_Title")</title>
+}

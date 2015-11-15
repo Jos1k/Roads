@@ -1,0 +1,654 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DatabaseModelStoreContainer">
+    <EntitySet Name="RouteNodes" EntityType="DatabaseModel.Store.RouteNodes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CityNodes" EntityType="DatabaseModel.Store.CityNodes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RegionNodes" EntityType="DatabaseModel.Store.RegionNodes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="DatabaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Feedbacks" EntityType="DatabaseModel.Store.Feedbacks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FeedbackItems" EntityType="DatabaseModel.Store.FeedbackItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FeedbackModels" EntityType="DatabaseModel.Store.FeedbackModels" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FeedbackValues" EntityType="DatabaseModel.Store.FeedbackValues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Treks" EntityType="DatabaseModel.Store.Treks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Settings" EntityType="DatabaseModel.Store.Settings" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="RouteNodeFeedback" Association="DatabaseModel.Store.RouteNodeFeedback">
+      <End Role="RouteNode" EntitySet="RouteNodes" />
+      <End Role="Feedback" EntitySet="Feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="CityNodeRouteNodeOrigin" Association="DatabaseModel.Store.CityNodeRouteNodeOrigin">
+      <End Role="CityNode" EntitySet="CityNodes" />
+      <End Role="RouteNode" EntitySet="RouteNodes" />
+    </AssociationSet>
+    <AssociationSet Name="CityNodeRouteNodeDestination" Association="DatabaseModel.Store.CityNodeRouteNodeDestination">
+      <End Role="CityNode" EntitySet="CityNodes" />
+      <End Role="RouteNode" EntitySet="RouteNodes" />
+    </AssociationSet>
+    <AssociationSet Name="RegionNodeCityNode" Association="DatabaseModel.Store.RegionNodeCityNode">
+      <End Role="RegionNode" EntitySet="RegionNodes" />
+      <End Role="CityNode" EntitySet="CityNodes" />
+    </AssociationSet>
+    <AssociationSet Name="UserFeedback" Association="DatabaseModel.Store.UserFeedback">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Feedback" EntitySet="Feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FeedbackModelFeedbackItem" Association="DatabaseModel.Store.FeedbackModelFeedbackItem">
+      <End Role="FeedbackModel" EntitySet="FeedbackModels" />
+      <End Role="FeedbackItem" EntitySet="FeedbackItems" />
+    </AssociationSet>
+    <AssociationSet Name="FeedbackItemFeedbackValue" Association="DatabaseModel.Store.FeedbackItemFeedbackValue">
+      <End Role="FeedbackItem" EntitySet="FeedbackItems" />
+      <End Role="FeedbackValue" EntitySet="FeedbackValues" />
+    </AssociationSet>
+    <AssociationSet Name="CityNodeTrek" Association="DatabaseModel.Store.CityNodeTrek">
+      <End Role="CityNode" EntitySet="CityNodes" />
+      <End Role="Trek" EntitySet="Treks" />
+    </AssociationSet>
+    <AssociationSet Name="CityNodeTrek1" Association="DatabaseModel.Store.CityNodeTrek1">
+      <End Role="CityNode" EntitySet="CityNodes" />
+      <End Role="Trek" EntitySet="Treks" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="RouteNodes">
+    <Key>
+      <PropertyRef Name="RouteNodeId" />
+    </Key>
+    <Property Name="RouteNodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OriginCityNodeId" Type="int" Nullable="false" />
+    <Property Name="DestinationCityNodeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CityNodes">
+    <Key>
+      <PropertyRef Name="CityNodeId" />
+    </Key>
+    <Property Name="CityNodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegionNodeId" Type="int" Nullable="false" />
+    <Property Name="LanguageKey" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegionNodes">
+    <Key>
+      <PropertyRef Name="RegionNodeId" />
+    </Key>
+    <Property Name="RegionNodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LanguageKey" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserType" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Feedbacks">
+    <Key>
+      <PropertyRef Name="FeedbackId" />
+    </Key>
+    <Property Name="FeedbackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubmitTime" Type="datetime" Nullable="false" />
+    <Property Name="RouteNodeId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeedbackItems">
+    <Key>
+      <PropertyRef Name="FeedbackItemId" />
+    </Key>
+    <Property Name="FeedbackItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Mandatory" Type="bit" Nullable="false" />
+    <Property Name="SortNumber" Type="int" Nullable="false" />
+    <Property Name="IsNumeric" Type="bit" Nullable="false" />
+    <Property Name="FeedbackModelId" Type="int" Nullable="false" />
+    <Property Name="NameTranslationKey" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DescriptionTranslationKey" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeedbackModels">
+    <Key>
+      <PropertyRef Name="FeedbackModelId" />
+    </Key>
+    <Property Name="FeedbackModelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HtmlCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="JavascriptCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FeedbackModelName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeedbackValues">
+    <Key>
+      <PropertyRef Name="FeedbackValueId" />
+    </Key>
+    <Property Name="FeedbackValueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FeedbackId" Type="int" Nullable="false" />
+    <Property Name="FeedbackItemId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Treks">
+    <Key>
+      <PropertyRef Name="TrekId" />
+    </Key>
+    <Property Name="Hash" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Track" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TrekId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OriginCityNodeId" Type="int" Nullable="false" />
+    <Property Name="DesinationCityNodeId" Type="int" Nullable="false" />
+    <Property Name="NodesCount" Type="tinyint" Nullable="false" />
+    <Property Name="TrekDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Settings">
+    <Key>
+      <PropertyRef Name="SettingId" />
+    </Key>
+    <Property Name="SettingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SettingName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SettingValue" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="RouteNodeFeedback">
+    <End Role="RouteNode" Type="DatabaseModel.Store.RouteNodes" Multiplicity="1" />
+    <End Role="Feedback" Type="DatabaseModel.Store.Feedbacks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RouteNode">
+        <PropertyRef Name="RouteNodeId" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="RouteNodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CityNodeRouteNodeOrigin">
+    <End Role="CityNode" Type="DatabaseModel.Store.CityNodes" Multiplicity="1" />
+    <End Role="RouteNode" Type="DatabaseModel.Store.RouteNodes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityNode">
+        <PropertyRef Name="CityNodeId" />
+      </Principal>
+      <Dependent Role="RouteNode">
+        <PropertyRef Name="OriginCityNodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CityNodeRouteNodeDestination">
+    <End Role="CityNode" Type="DatabaseModel.Store.CityNodes" Multiplicity="1" />
+    <End Role="RouteNode" Type="DatabaseModel.Store.RouteNodes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityNode">
+        <PropertyRef Name="CityNodeId" />
+      </Principal>
+      <Dependent Role="RouteNode">
+        <PropertyRef Name="DestinationCityNodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RegionNodeCityNode">
+    <End Role="RegionNode" Type="DatabaseModel.Store.RegionNodes" Multiplicity="1" />
+    <End Role="CityNode" Type="DatabaseModel.Store.CityNodes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegionNode">
+        <PropertyRef Name="RegionNodeId" />
+      </Principal>
+      <Dependent Role="CityNode">
+        <PropertyRef Name="RegionNodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserFeedback">
+    <End Role="User" Type="DatabaseModel.Store.Users" Multiplicity="1" />
+    <End Role="Feedback" Type="DatabaseModel.Store.Feedbacks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FeedbackModelFeedbackItem">
+    <End Role="FeedbackModel" Type="DatabaseModel.Store.FeedbackModels" Multiplicity="1" />
+    <End Role="FeedbackItem" Type="DatabaseModel.Store.FeedbackItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeedbackModel">
+        <PropertyRef Name="FeedbackModelId" />
+      </Principal>
+      <Dependent Role="FeedbackItem">
+        <PropertyRef Name="FeedbackModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FeedbackItemFeedbackValue">
+    <End Role="FeedbackItem" Type="DatabaseModel.Store.FeedbackItems" Multiplicity="1" />
+    <End Role="FeedbackValue" Type="DatabaseModel.Store.FeedbackValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeedbackItem">
+        <PropertyRef Name="FeedbackItemId" />
+      </Principal>
+      <Dependent Role="FeedbackValue">
+        <PropertyRef Name="FeedbackItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CityNodeTrek">
+    <End Role="CityNode" Type="DatabaseModel.Store.CityNodes" Multiplicity="1" />
+    <End Role="Trek" Type="DatabaseModel.Store.Treks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityNode">
+        <PropertyRef Name="CityNodeId" />
+      </Principal>
+      <Dependent Role="Trek">
+        <PropertyRef Name="OriginCityNodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CityNodeTrek1">
+    <End Role="CityNode" Type="DatabaseModel.Store.CityNodes" Multiplicity="1" />
+    <End Role="Trek" Type="DatabaseModel.Store.Treks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityNode">
+        <PropertyRef Name="CityNodeId" />
+      </Principal>
+      <Dependent Role="Trek">
+        <PropertyRef Name="DesinationCityNodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="DatabaseModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RouteNodes" EntityType="DatabaseModel.RouteNode" />
+          <EntitySet Name="CityNodes" EntityType="DatabaseModel.CityNode" />
+          <EntitySet Name="RegionNodes" EntityType="DatabaseModel.RegionNode" />
+          <EntitySet Name="Users" EntityType="DatabaseModel.User" />
+          <EntitySet Name="Feedbacks" EntityType="DatabaseModel.Feedback" />
+          <EntitySet Name="FeedbackItems" EntityType="DatabaseModel.FeedbackItem" />
+          <EntitySet Name="FeedbackModels" EntityType="DatabaseModel.FeedbackModel" />
+          <AssociationSet Name="RouteNodeFeedback" Association="DatabaseModel.RouteNodeFeedback">
+            <End Role="RouteNode" EntitySet="RouteNodes" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="CityNodeRouteNodeOrigin" Association="DatabaseModel.CityNodeRouteNodeOrigin">
+            <End Role="CityNode" EntitySet="CityNodes" />
+            <End Role="RouteNode" EntitySet="RouteNodes" />
+          </AssociationSet>
+          <AssociationSet Name="CityNodeRouteNodeDestination" Association="DatabaseModel.CityNodeRouteNodeDestination">
+            <End Role="CityNode" EntitySet="CityNodes" />
+            <End Role="RouteNode" EntitySet="RouteNodes" />
+          </AssociationSet>
+          <AssociationSet Name="RegionNodeCityNode" Association="DatabaseModel.RegionNodeCityNode">
+            <End Role="RegionNode" EntitySet="RegionNodes" />
+            <End Role="CityNode" EntitySet="CityNodes" />
+          </AssociationSet>
+          <AssociationSet Name="UserFeedback" Association="DatabaseModel.UserFeedback">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FeedbackModelFeedbackItem" Association="DatabaseModel.FeedbackModelFeedbackItem">
+            <End Role="FeedbackModel" EntitySet="FeedbackModels" />
+            <End Role="FeedbackItem" EntitySet="FeedbackItems" />
+          </AssociationSet>
+          <EntitySet Name="FeedbackValues" EntityType="DatabaseModel.FeedbackValue" />
+          <EntitySet Name="Treks" EntityType="DatabaseModel.Trek" />
+          <AssociationSet Name="FeedbackItemFeedbackValue" Association="DatabaseModel.FeedbackItemFeedbackValue">
+            <End Role="FeedbackItem" EntitySet="FeedbackItems" />
+            <End Role="FeedbackValue" EntitySet="FeedbackValues" />
+          </AssociationSet>
+          <AssociationSet Name="CityNodeTrek" Association="DatabaseModel.CityNodeTrek">
+            <End Role="CityNode" EntitySet="CityNodes" />
+            <End Role="Trek" EntitySet="Treks" />
+          </AssociationSet>
+          <AssociationSet Name="CityNodeTrek1" Association="DatabaseModel.CityNodeTrek1">
+            <End Role="CityNode" EntitySet="CityNodes" />
+            <End Role="Trek" EntitySet="Treks" />
+          </AssociationSet>
+          <EntitySet Name="Settings" EntityType="DatabaseModel.Setting" />
+        </EntityContainer>
+        <EntityType Name="RouteNode">
+          <Key>
+            <PropertyRef Name="RouteNodeId" />
+          </Key>
+          <Property Name="RouteNodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OriginCityNodeId" Type="Int32" Nullable="false" />
+          <Property Name="DestinationCityNodeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Feedbacks" Relationship="DatabaseModel.RouteNodeFeedback" FromRole="RouteNode" ToRole="Feedback" />
+          <NavigationProperty Name="OriginCityNode" Relationship="DatabaseModel.CityNodeRouteNodeOrigin" FromRole="RouteNode" ToRole="CityNode" />
+          <NavigationProperty Name="DestinationCityNode" Relationship="DatabaseModel.CityNodeRouteNodeDestination" FromRole="RouteNode" ToRole="CityNode" />
+        </EntityType>
+        <EntityType Name="CityNode">
+          <Key>
+            <PropertyRef Name="CityNodeId" />
+          </Key>
+          <Property Name="CityNodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionNodeId" Type="Int32" Nullable="false" />
+          <Property Name="LanguageKey" Type="String" Nullable="false" />
+          <NavigationProperty Name="OriginRouteNodes" Relationship="DatabaseModel.CityNodeRouteNodeOrigin" FromRole="CityNode" ToRole="RouteNode" />
+          <NavigationProperty Name="DestinationRouteNodes" Relationship="DatabaseModel.CityNodeRouteNodeDestination" FromRole="CityNode" ToRole="RouteNode" />
+          <NavigationProperty Name="RegionNode" Relationship="DatabaseModel.RegionNodeCityNode" FromRole="CityNode" ToRole="RegionNode" />
+          <NavigationProperty Name="OriginTreks" Relationship="DatabaseModel.CityNodeTrek" FromRole="CityNode" ToRole="Trek" />
+          <NavigationProperty Name="DestinationTreks" Relationship="DatabaseModel.CityNodeTrek1" FromRole="CityNode" ToRole="Trek" />
+        </EntityType>
+        <EntityType Name="RegionNode">
+          <Key>
+            <PropertyRef Name="RegionNodeId" />
+          </Key>
+          <Property Name="RegionNodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LanguageKey" Type="String" Nullable="false" />
+          <NavigationProperty Name="CityNodes" Relationship="DatabaseModel.RegionNodeCityNode" FromRole="RegionNode" ToRole="CityNode" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="UserType" Type="String" Nullable="false" />
+          <NavigationProperty Name="Feedbacks" Relationship="DatabaseModel.UserFeedback" FromRole="User" ToRole="Feedback" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubmitTime" Type="DateTime" Nullable="false" />
+          <Property Name="RouteNodeId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RouteNode" Relationship="DatabaseModel.RouteNodeFeedback" FromRole="Feedback" ToRole="RouteNode" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.UserFeedback" FromRole="Feedback" ToRole="User" />
+        </EntityType>
+        <EntityType Name="FeedbackItem">
+          <Key>
+            <PropertyRef Name="FeedbackItemId" />
+          </Key>
+          <Property Name="FeedbackItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mandatory" Type="Boolean" Nullable="false" />
+          <Property Name="SortNumber" Type="Int32" Nullable="false" />
+          <Property Name="IsNumeric" Type="Boolean" Nullable="false" />
+          <Property Name="FeedbackModelId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FeedbackModel" Relationship="DatabaseModel.FeedbackModelFeedbackItem" FromRole="FeedbackItem" ToRole="FeedbackModel" />
+          <Property Name="NameTranslationKey" Type="String" Nullable="false" />
+          <Property Name="DescriptionTranslationKey" Type="String" Nullable="false" />
+          <NavigationProperty Name="FeedbackValues" Relationship="DatabaseModel.FeedbackItemFeedbackValue" FromRole="FeedbackItem" ToRole="FeedbackValue" />
+        </EntityType>
+        <EntityType Name="FeedbackModel">
+          <Key>
+            <PropertyRef Name="FeedbackModelId" />
+          </Key>
+          <Property Name="FeedbackModelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HtmlCode" Type="String" Nullable="false" />
+          <Property Name="JavascriptCode" Type="String" Nullable="false" />
+          <NavigationProperty Name="FeedbackItems" Relationship="DatabaseModel.FeedbackModelFeedbackItem" FromRole="FeedbackModel" ToRole="FeedbackItem" />
+          <Property Name="FeedbackModelName" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="RouteNodeFeedback">
+          <End Type="DatabaseModel.RouteNode" Role="RouteNode" Multiplicity="1" />
+          <End Type="DatabaseModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RouteNode">
+              <PropertyRef Name="RouteNodeId" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="RouteNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityNodeRouteNodeOrigin">
+          <End Type="DatabaseModel.CityNode" Role="CityNode" Multiplicity="1" />
+          <End Type="DatabaseModel.RouteNode" Role="RouteNode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityNode">
+              <PropertyRef Name="CityNodeId" />
+            </Principal>
+            <Dependent Role="RouteNode">
+              <PropertyRef Name="OriginCityNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityNodeRouteNodeDestination">
+          <End Type="DatabaseModel.CityNode" Role="CityNode" Multiplicity="1" />
+          <End Type="DatabaseModel.RouteNode" Role="RouteNode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityNode">
+              <PropertyRef Name="CityNodeId" />
+            </Principal>
+            <Dependent Role="RouteNode">
+              <PropertyRef Name="DestinationCityNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RegionNodeCityNode">
+          <End Type="DatabaseModel.RegionNode" Role="RegionNode" Multiplicity="1" />
+          <End Type="DatabaseModel.CityNode" Role="CityNode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegionNode">
+              <PropertyRef Name="RegionNodeId" />
+            </Principal>
+            <Dependent Role="CityNode">
+              <PropertyRef Name="RegionNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserFeedback">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FeedbackModelFeedbackItem">
+          <End Type="DatabaseModel.FeedbackModel" Role="FeedbackModel" Multiplicity="1" />
+          <End Type="DatabaseModel.FeedbackItem" Role="FeedbackItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeedbackModel">
+              <PropertyRef Name="FeedbackModelId" />
+            </Principal>
+            <Dependent Role="FeedbackItem">
+              <PropertyRef Name="FeedbackModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FeedbackValue">
+          <Key>
+            <PropertyRef Name="FeedbackValueId" />
+          </Key>
+          <Property Name="FeedbackValueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" Nullable="false" />
+          <Property Name="FeedbackId" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="FeedbackItem" Relationship="DatabaseModel.FeedbackItemFeedbackValue" FromRole="FeedbackValue" ToRole="FeedbackItem" />
+          <Property Name="FeedbackItemId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trek">
+          <Key>
+            <PropertyRef Name="TrekId" />
+          </Key>
+          <Property Name="Hash" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Track" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="TrekId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="OriginCityNode" Relationship="DatabaseModel.CityNodeTrek" FromRole="Trek" ToRole="CityNode" />
+          <Property Name="OriginCityNodeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DestinationCityNode" Relationship="DatabaseModel.CityNodeTrek1" FromRole="Trek" ToRole="CityNode" />
+          <Property Name="DesinationCityNodeId" Type="Int32" Nullable="false" />
+          <Property Name="NodesCount" Type="Byte" Nullable="false" />
+          <Property Name="TrekDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <Association Name="FeedbackItemFeedbackValue">
+          <End Type="DatabaseModel.FeedbackItem" Role="FeedbackItem" Multiplicity="1" />
+          <End Type="DatabaseModel.FeedbackValue" Role="FeedbackValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeedbackItem">
+              <PropertyRef Name="FeedbackItemId" />
+            </Principal>
+            <Dependent Role="FeedbackValue">
+              <PropertyRef Name="FeedbackItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityNodeTrek">
+          <End Type="DatabaseModel.CityNode" Role="CityNode" Multiplicity="1" />
+          <End Type="DatabaseModel.Trek" Role="Trek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityNode">
+              <PropertyRef Name="CityNodeId" />
+            </Principal>
+            <Dependent Role="Trek">
+              <PropertyRef Name="OriginCityNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityNodeTrek1">
+          <End Type="DatabaseModel.CityNode" Role="CityNode" Multiplicity="1" />
+          <End Type="DatabaseModel.Trek" Role="Trek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityNode">
+              <PropertyRef Name="CityNodeId" />
+            </Principal>
+            <Dependent Role="Trek">
+              <PropertyRef Name="DesinationCityNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="SettingId" />
+          </Key>
+          <Property Name="SettingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SettingName" Type="String" Nullable="false" />
+          <Property Name="SettingValue" Type="String" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseModelContainer">
+    <EntitySetMapping Name="RouteNodes">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.RouteNode)">
+        <MappingFragment StoreEntitySet="RouteNodes">
+          <ScalarProperty Name="RouteNodeId" ColumnName="RouteNodeId" />
+          <ScalarProperty Name="OriginCityNodeId" ColumnName="OriginCityNodeId" />
+          <ScalarProperty Name="DestinationCityNodeId" ColumnName="DestinationCityNodeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CityNodes">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.CityNode)">
+        <MappingFragment StoreEntitySet="CityNodes">
+          <ScalarProperty Name="CityNodeId" ColumnName="CityNodeId" />
+          <ScalarProperty Name="RegionNodeId" ColumnName="RegionNodeId" />
+          <ScalarProperty Name="LanguageKey" ColumnName="LanguageKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegionNodes">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.RegionNode)">
+        <MappingFragment StoreEntitySet="RegionNodes">
+          <ScalarProperty Name="RegionNodeId" ColumnName="RegionNodeId" />
+          <ScalarProperty Name="LanguageKey" ColumnName="LanguageKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Feedbacks">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.Feedback)">
+        <MappingFragment StoreEntitySet="Feedbacks">
+          <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+          <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+          <ScalarProperty Name="RouteNodeId" ColumnName="RouteNodeId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeedbackItems">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.FeedbackItem)">
+        <MappingFragment StoreEntitySet="FeedbackItems">
+          <ScalarProperty Name="FeedbackItemId" ColumnName="FeedbackItemId" />
+          <ScalarProperty Name="Mandatory" ColumnName="Mandatory" />
+          <ScalarProperty Name="SortNumber" ColumnName="SortNumber" />
+          <ScalarProperty Name="IsNumeric" ColumnName="IsNumeric" />
+          <ScalarProperty Name="FeedbackModelId" ColumnName="FeedbackModelId" />
+          <ScalarProperty Name="NameTranslationKey" ColumnName="NameTranslationKey" />
+          <ScalarProperty Name="DescriptionTranslationKey" ColumnName="DescriptionTranslationKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeedbackModels">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.FeedbackModel)">
+        <MappingFragment StoreEntitySet="FeedbackModels">
+          <ScalarProperty Name="FeedbackModelId" ColumnName="FeedbackModelId" />
+          <ScalarProperty Name="HtmlCode" ColumnName="HtmlCode" />
+          <ScalarProperty Name="JavascriptCode" ColumnName="JavascriptCode" />
+          <ScalarProperty Name="FeedbackModelName" ColumnName="FeedbackModelName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeedbackValues">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.FeedbackValue)">
+        <MappingFragment StoreEntitySet="FeedbackValues">
+          <ScalarProperty Name="FeedbackValueId" ColumnName="FeedbackValueId" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+          <ScalarProperty Name="FeedbackItemId" ColumnName="FeedbackItemId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treks">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.Trek)">
+        <MappingFragment StoreEntitySet="Treks">
+          <ScalarProperty Name="TrekId" ColumnName="TrekId" />
+          <ScalarProperty Name="Hash" ColumnName="Hash" />
+          <ScalarProperty Name="Track" ColumnName="Track" />
+          <ScalarProperty Name="OriginCityNodeId" ColumnName="OriginCityNodeId" />
+          <ScalarProperty Name="DesinationCityNodeId" ColumnName="DesinationCityNodeId" />
+          <ScalarProperty Name="NodesCount" ColumnName="NodesCount" />
+          <ScalarProperty Name="TrekDate" ColumnName="TrekDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Settings">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.Setting)">
+        <MappingFragment StoreEntitySet="Settings">
+          <ScalarProperty Name="SettingId" ColumnName="SettingId" />
+          <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+          <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

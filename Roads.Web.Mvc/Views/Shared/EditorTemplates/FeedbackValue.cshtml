@@ -1,0 +1,5 @@
+﻿@model Roads.Web.Mvc.Models.FeedbackValue
+@Html.HiddenFor(x=>x.FeedbackId)
+@Html.HiddenFor(x=>x.FeedbackItemId)
+@Html.HiddenFor(x => x.Value, new Dictionary<string, object> { { "data-val", "false" } })
+

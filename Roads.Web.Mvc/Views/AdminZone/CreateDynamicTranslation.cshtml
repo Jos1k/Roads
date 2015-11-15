@@ -1,0 +1,36 @@
+﻿@model Roads.Web.Mvc.Models.CreateTranslationViewModel
+
+@{
+    ViewBag.Title = @Html.GetLabel("AZ_CreateDT_Title");
+    Layout = "~/Views/AdminZone/Shared/_AdminLayout.cshtml";
+}
+
+@{
+    using (Html.BeginForm("CreateDynamicTranslation", "AdminZone", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-12" }))
+    {
+        <div class="page-header">
+            <h3>@Html.GetLabel("AZ_CreateDT_Title")</h3>
+        </div>
+    
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th style="width: 30px;">@Html.GetLabel("AZ_CreateDT_Title_Language")</th>
+                    <th>@Html.GetLabel("AZ_CreateDT_Title_TranslationKey")</th>
+                    <th>@Html.GetLabel("AZ_CreateDT_Title_Value")</th>
+                    <th>@Html.GetLabel("AZ_CreateDT_Title_Discription")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @Html.EditorFor(m=>m.Translations)
+                <tr>
+                    <td colspan="100">
+                        <button type="submit" class="btn btn-success">@Html.GetLabel("AZ_Link_Save")</button>
+
+                        <a href="@Url.Action("EditDynamicTranslations", new {Controller="AdminZone"})" class="btn btn-warning">@Html.GetLabel("AZ_Link_Cancel")</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}

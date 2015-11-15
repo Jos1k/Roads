@@ -1,0 +1,13 @@
+﻿.export-link-container {
+   display: inline-block; 
+   height: 32px; 
+   width: 35px; 
+}
+
+.xml-export-link {
+    background: url('../icons/export-xml-35x32.png') no-repeat center right;
+}
+
+.csv-export-link {
+    background: url('../icons/export-csv-35x32.png')  no-repeat center right;    
+}

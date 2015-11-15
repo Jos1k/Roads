@@ -1,0 +1,53 @@
+﻿@model Roads.Web.Mvc.Models.Enums.ExportDataType
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.form.min.js")"></script>
+
+<!--Ajax.BeginForm parameters-->
+@{
+    var ajaxOptions = new AjaxOptions
+    {
+        HttpMethod = "POST"
+    };
+    var htmlAttributes = new
+    {
+        enctype = "multipart/form-data"
+    };
+}
+
+<!--Ajax.BeginForm to upload a file-->
+@using (Ajax.BeginForm("Upload", "AdminZone", new { dataType = @Model }, ajaxOptions, htmlAttributes))
+{
+    @Html.AntiForgeryToken()
+
+
+    <h4 style="display: inline">@Html.GetLabel("ETP_Label_Import")</h4>
+
+    <input type="submit" value="@Html.GetLabel("ETP_Button_Upload")" class="btn btn-primary" style=" display: inline" />
+
+    <span>
+        <input type="file" name="file" id="file-placeholder" accept="text/xml, text/csv" style=" display: inline">
+    </span>
+    <span class='label label-primary' id="upload-file-info" ></span>
+
+
+
+}
+
+<script>
+    (function () {
+        $('form').ajaxForm({
+            beforeSubmit: function () {
+                $('form').clearForm();
+            },
+
+            success: function (report) {
+                alert(report);
+                $('#upload-file-info').text('');
+            },
+        });
+    })();
+
+    $("#file-placeholder").change(function () {
+        $("#upload-file-info").html($(this).val());
+    });
+</script>

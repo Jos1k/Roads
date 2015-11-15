@@ -1,0 +1,56 @@
+﻿@model Roads.Web.Mvc.Models.FindRoadModel
+@{
+    using (Html.BeginForm("FindRoad", "Roads", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-12", @id = "searchFormId" }))
+    {
+        @Html.HiddenFor(s => s.OriginCityNodeId)
+
+        @Html.HiddenFor(s => s.DestinationCityNodeId)
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>@Html.GetLabel("FR_Label_City")</th>
+                    <th><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></th>
+                    <th>@Html.GetLabel("FR_Label_City")</th>
+                    <th class="middle">@Html.GetLabel("FR_Label_Feedbacks")</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.SearchResult.RoadsList.OrderByDescending(e => e.FeedbacksCount).ToList())
+                {
+                    string linck = string.Format("{0}", result.RouteHash);
+
+                    if (!string.IsNullOrEmpty(result.OriginCityName) || !string.IsNullOrEmpty(result.DestinationCityName))
+                    {
+                        linck = string.Format("{0}-{1}-To-{2}", result.RouteHash, result.OriginCityName.Replace(" ", "-").Replace(",", ""), result.DestinationCityName.Replace(" ", "-").Replace(",", ""));
+                    }
+
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(result.OriginCityName))
+                            {
+                                <a href="#">@Html.GetCityNameSeparationtext(result.OriginCityName, true),</a> @Html.GetCityNameSeparationtext(result.OriginCityName, false)
+                            }
+                        </td>
+                        <td>-</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(result.DestinationCityName))
+                            {
+                                <a href="#">@Html.GetCityNameSeparationtext(result.DestinationCityName, true),</a> @Html.GetCityNameSeparationtext(result.DestinationCityName, false)
+                            }
+                        </td>
+                        <td class="middle">@result.FeedbacksCount</td>
+                        <td class="left"><a href="@Url.Action("Datails", "Roads")/@linck">@Html.GetLabel("FR_Button_View")>></a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        <center>
+            @Html.Partial("Partial/GrigButtons", Model.SearchResult)
+        </center>
+        <br />
+    }
+}
+
+

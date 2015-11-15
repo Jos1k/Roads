@@ -1,0 +1,21 @@
+﻿    .input-span {
+    color: #36b4a7; 
+    position: absolute; 
+    margin: -10px 0 0 -25px; 
+}
+
+   .full-size-input {
+       display: block;
+   }
+
+   .full-size-input tbody,tr {
+      display: block;
+   }
+
+    .full-size-inputtr tbody,tr th {
+       width: 100%;
+   }
+
+.errorDiv {
+   display:none;
+}

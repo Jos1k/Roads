@@ -1,0 +1,234 @@
+﻿@using System.ComponentModel
+@using Antlr.Runtime
+@using Roads.Web.Mvc.Models
+@using WebGrease.Css.Extensions
+@model Roads.Web.Mvc.Models.FeedbackItemModel
+
+@{
+    Layout = "~/Views/AdminZone/Shared/_AdminLayout.cshtml";
+}
+
+@Styles.Render("~/feebBackInput/css")
+
+<h2><legend>@Html.GetLabel("FBS_Label_FeedbackSettingsLegend")</legend></h2>
+
+<form id="FeedBackItems">
+    <div class="table-responsive">
+        <table class="table table-bordered" border="1">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedbackItemSettings[0].settingName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedbackItemSettings[0].sortNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedbackItemSettings[0].description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedbackItemSettings[0].isNumeric)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedbackItemSettings[0].isMandatory)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedbackItemSettings[0].feedbackModelId)
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.feedbackItemSettings)
+            {
+                <tr id="tableRow_@item.feedbackItemId.ToString()">
+                    <td>
+                        @Html.HiddenFor(modelItem => item.settingName, new { id = "settingName_" + item.feedbackItemId, disabled = true, @class = "feedBackInputNotEdit" })
+
+                        @foreach (var dynamicTraslationObject in Model.dynamicTranslations)
+                        {
+                            if (item.settingName.Equals(dynamicTraslationObject.DynamicKey))
+                            {
+                                <div class="form-group">
+                                    @{Language language = Model.availableLanguages.First(i => i.LanguageId == dynamicTraslationObject.LanguageId);}
+                                    @Html.Label(language.Name.ToUpper() + ":")
+                                    @Html.TextBox("settingNameValue_" + item.feedbackItemId + "_" + language.LanguageId, dynamicTraslationObject.Value, new { disabled = true, @class = "feedBackInputNotEdit" })
+                                </div>
+                            }
+                        }
+                    </td>
+
+                    <td>
+                        @Html.TextBoxFor(modelItem => item.sortNumber, new { id = "sortNumber" + item.feedbackItemId, disabled = true, @class = "feedBackInputNotEdit", @onkeypress = "InputNumericOnly(this, notNumberError)" })
+                    </td>
+
+                    <td>
+                        @Html.HiddenFor(modelItem => item.description, new { id = "description" + item.feedbackItemId, disabled = true, @class = "feedBackInputNotEdit" })
+                        @foreach (var dynamicTraslationObject in Model.dynamicTranslations)
+                        {
+                            if (item.description.Equals(dynamicTraslationObject.DynamicKey))
+                            {
+
+                                <div class="form-group">
+                                    @{Language language = Model.availableLanguages.First(i => i.LanguageId == dynamicTraslationObject.LanguageId);}
+                                    @Html.Label(language.Name.ToUpper() + ":")
+                                    @Html.TextBox("descriptionValue_" + item.feedbackItemId + "_" + language.LanguageId, dynamicTraslationObject.Value, new { disabled = true, @class = "feedBackInputNotEdit" })
+                                </div>
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(modelItem => item.isNumeric, new { id = "isNumeric" + item.feedbackItemId, disabled = true })
+                    </td>
+
+                    <td>
+                        @Html.CheckBoxFor(modelItem => item.isMandatory, new { id = "isMandatory" + item.feedbackItemId, disabled = true })
+                    </td>
+
+                    <td>
+                        @Html.DropDownListFor(modelItem => modelItem.modelsNames, new SelectList(Model.modelsNames, "Key", "Value", item.feedbackModelId), new { id = "feedbackModelIdList" + item.feedbackItemId, disabled = true, @class = "form-control" })
+                    </td>
+                    <td>
+                        <div class="btn btn-default" id="EditButton_@item.feedbackItemId.ToString()" onclick="EditButtonClick(@item.feedbackItemId, @Model.availableLanguages.Count)">@Html.GetLabel("FBS_Button_Edit")</div>
+                        <div class="btn btn-default" id="SaveButton_@item.feedbackItemId.ToString()" onclick="SaveButtonClick(@item.feedbackItemId, @Model.availableLanguages.Count, '@Url.Action("FeedbackSettings", "AdminZone")')">@Html.GetLabel("FBS_Button_Save")</div>
+                    </td>
+                    <td>
+                        <div class="btn btn-default" id="DeleteButton_@item.feedbackItemId.ToString()" onclick="DeleteButtonClick(@item.feedbackItemId, '@Url.Action("DeleteFeedback", "AdminZone")')">@Html.GetLabel("FBS_Button_Delete")</div>
+                        <div class="btn btn-default" id="CancelButton_@item.feedbackItemId.ToString()" onclick="CancelButtonClick(@item.feedbackItemId, @Model.availableLanguages.Count)">@Html.GetLabel("FBS_Button_Cancel")</div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</form>
+
+<div id="notNumberError" class="field-validation-error">
+    @Html.GetLabel("FBS_ErrorMessage_InvalidValueSortNumber")
+</div>
+<div id="emptyMandatoryFields" class="field-validation-error">
+    @Html.GetLabel("FBS_ErrorMessage_EmptyMandatoryFields")
+</div>
+
+<div class="btn btn-default" id="CreateNewButton" onclick="CreateNewButtonClick()">@Html.GetLabel("FBS_Button_CreateNew")</div>
+
+<div class="modal fade" id="newFedBackItemForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm())
+            {
+                <fieldset>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="control-label">
+                                @Html.Label(@Html.GetLabel("FBS_Label_FeedbackSettingName"))
+                            </div>
+                            @Html.Hidden("settingName_New", null, new { @class = "form-control", id = "settingName_New" })
+                        </div>
+                        @foreach (var language in Model.availableLanguages)
+                        {
+                            <div class="form-group">
+                                <div class="control-label">
+                                    @Html.Label(language.Name.ToUpper())
+                                </div>
+                                @Html.TextBox("settingNameValue_New", null, new { @class = "form-control", id = "settingNameValue_New_" + language.LanguageId })
+                            </div>
+                        }
+                        <div class="form-group">
+                            <div class="control-label">
+                                @Html.Label(@Html.GetLabel("FBS_Label_FeedbackSortNumber"))
+                            </div>
+                            @Html.TextBox("sortNumberNew", null, new { @class = "form-control", id = "sortNumberNew", @onkeypress = "InputNumericOnly(this, notNumberNewError)" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label">
+                                @Html.Label(@Html.GetLabel("FBS_Label_FeedbackSettinDescription"))
+                            </div>
+                            @Html.Hidden("descriptionNew", null, new { @class = "form-control", id = "descriptionNew" })
+                        </div>
+                        @foreach (var language in Model.availableLanguages)
+                        {
+                            <div class="form-group">
+                                <div class="control-label">
+                                    @Html.Label(language.Name.ToUpper())
+                                </div>
+                                @Html.TextBox("descriptionValue_New", null, new { @class = "form-control", id = "descriptionValue_New_" + language.LanguageId })
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <div class="control-label">
+                                @Html.Label(@Html.GetLabel("FBS_Label_FeedbackIsNumeric"))
+                            </div>
+                            @Html.CheckBox("isNumericNew", new { id = "isNumericNew" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label">
+                                @Html.Label(@Html.GetLabel("FBS_Label_FeedbackIsMandatory"))
+                            </div>
+                            @Html.CheckBox("isMandatoryNew", new { id = "isMandatoryNew" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label">
+                                @Html.Label(@Html.GetLabel("FBS_Label_FeedbackModel"))
+                            </div>
+                            @Html.DropDownListFor(modelItem => modelItem.modelsNames, new SelectList(Model.modelsNames, "Key", "Value"), new { id = "feedbackModelIdListNew", @class = "form-control" })
+                        </div>
+
+                        <div id="notNumberNewError" class="field-validation-error">
+                            @Html.GetLabel("FBS_ErrorMessage_InvalidValueSortNumber")
+                        </div>
+                        <div id="emptyMandatoryFieldsNew" class="field-validation-error">
+                            @Html.GetLabel("FBS_ErrorMessage_EmptyMandatoryFields")
+                        </div>
+
+                        <p>
+                            <input class="btn btn-default" id="SaveNewButton" onclick="SaveNewButtonClick(@Model.availableLanguages.Count, '@Url.Action("AddFeedback", "AdminZone")')" value=@Html.GetLabel("FBS_Button_SaveNew") />
+                            <input class="btn btn-default" id="CancelNewButton" onclick="CancelNewButtonClick(@Model.availableLanguages.Count)" value=@Html.GetLabel("FBS_Button_CancelNew") />
+                        </p>
+                    </div>
+                </fieldset>
+            }
+        </div>
+    </div>
+</div>
+
+@{
+    string[] stringList = @Model.feedbackItemSettings.Select(m => m.feedbackItemId.ToString()).ToArray();
+    string resultString = "[";
+}
+@for (int i = 0; i < stringList.Length; i++)
+{
+    resultString = resultString + stringList[i];
+    if (stringList.Length > (i + 1))
+    {
+        resultString = resultString + ',';
+    }
+}
+@{ resultString = resultString + ']'; }
+
+<script>
+    $(document).ready($('#btnFeedbackSettings').addClass('btn-info'));
+
+    $(document).ready(function() {
+
+        var list = @resultString;
+        var count = @stringList.Length;
+        for (var i = 0; i <= count; i++) {
+            $("#SaveButton_" + list[i] ).hide();
+            $("#CancelButton_" + list[i]).hide();
+        }
+
+        $("#newFedBackItemForm").hide();
+
+        $("#notNumberError").hide();
+        $("#emptyMandatoryFields").hide();
+        $("#notNumberNewError").hide();
+        $("#emptyMandatoryFieldsNew").hide();
+
+    });
+</script>
+
+<script src="~/Content/Scripts/feedbackSettingPageScript.js"></script>

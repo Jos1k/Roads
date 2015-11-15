@@ -1,0 +1,109 @@
+﻿@using Roads.Web.Mvc.Models.Enums
+@model Roads.Web.Mvc.Models.ManageMapObjectViewModel
+
+@{
+    ViewBag.Title = "Manage Map Object";
+    Layout = "~/Views/AdminZone/Shared/_AdminLayout.cshtml";
+}
+
+<script src="@Url.Content("~/Content/Scripts/jquery.autocomplete.min.js")"></script>
+<link href="@Url.Content("~/Content/css/autocomplete-box.css")" rel="stylesheet" />
+
+<br />
+<h4 style="display: inline">@Html.GetLabel("ETP_Label_Export")</h4>
+@Html.ActionLink("XML", "ExportXml", "AdminZone", new { dataType = ExportDataType.MapObject }, new { @class = "btn btn-xs btn-info" })
+@Html.ActionLink("CSV", "ExportCsv", "AdminZone", new { dataType = ExportDataType.MapObject }, new { @class = "btn btn-xs btn-info" })
+<br />
+<br />
+<!--Import file place-->
+@Html.Partial("~/Views/AdminZone/Partial/_UploadFile.cshtml", ExportDataType.MapObject)
+
+<hr />
+
+@{
+    using (Html.BeginForm("EditMapObjectTranslations", "AdminZone", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-12", @id = "formManageMapObject" }))
+    {
+        @Html.HiddenFor(m => m.SubmitType, new { @id = "SubmitType" })
+
+        <div class="page-header">
+            <h3>@Html.GetLabel("AZ_MapObject_Title")</h3>
+        </div>
+
+        <div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.TextBoxFor(s => s.MapObjectName, new { @class = "form-control", @placeholder = Html.GetLabel("FR_Label_City") })
+                    <div style="text-align: center;">@Html.ValidationMessageFor(s => s.MapObjectName)</div>
+                    @Html.HiddenFor(m => m.MapObjectId)
+                </div>
+                <div class="col-md-4">
+                    <button onclick="Search()" class="btn btn-info" type="button">@Html.GetLabel("FR_Button_Search")</button>
+                    @Html.ActionLink(Html.GetLabel("AZ_EditDT_Add"), "CreateMapObject", new { Controller = "AdminZone" }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+
+            @if (Model.Translations.Any())
+            {
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">@Html.GetLabel("AZ_CreateDT_Title_Language")</th>
+                            <th>@Html.GetLabel("AZ_CreateDT_Title_Value")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @Html.EditorFor(e => e.Translations)
+                        <tr>
+                            <td colspan="100">
+                                <button onclick="Submit()" type="button" class="btn btn-success">@Html.GetLabel("AZ_Link_Save")</button>
+
+                                <a href="@Url.Action("EditMapObjectTranslations", new { Controller = "AdminZone" })" class="btn btn-warning">@Html.GetLabel("AZ_Link_Cancel")</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready($('#btnManageMapObject').addClass('btn-info').removeClass('btn-default'));
+
+            function Search() {
+                $("#SubmitType").val("Search");
+
+                $("#formManageMapObject").submit();
+            }
+
+            function Submit() {
+                $("#SubmitType").val("Submit");
+
+                $("#formManageMapObject").submit();
+            }
+
+            function HideCollums(classes) {
+                for (var k in classes) {
+
+                    var appBanners = document.getElementsByClassName(classes[k]), i;
+
+                    for (var i = 0; i < appBanners.length; i++) {
+                        appBanners[i].style.display = 'none';
+                    };
+
+                };
+            }
+            $(document).ready(
+                $('#MapObjectName').autocomplete({
+                    serviceUrl: '/api/Ajax/GetSuggestion',
+                    paramName: 'searchString',
+                    autoSelectFirst: true,
+                    onSelect: function (suggestion) {
+                        $('#MapObjectId').val(suggestion.data);
+                    }
+                }));
+
+            $(document).ready(HideCollums(["tdLanguageKey", "tdDescription"]));
+        </script>
+    }
+}
+

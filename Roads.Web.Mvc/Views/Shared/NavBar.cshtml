@@ -1,0 +1,39 @@
+﻿@using Roads.Web.Mvc.Services
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Roads</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" title="Roads" href="@Url.Action("FindRoad","Roads")"><img src="~/Content/icons/SiteIcon48x48.png" /></a>
+            <a class="navbar-brand" style="padding-top: 15px;" title="@Html.GetLabel("G_Link_FindRoad_Title")" href="@Url.Action("FindRoad","Roads")">@Html.GetLabel("G_Link_FindRoad")</a>
+            <a class="navbar-brand" style="padding-top: 15px;" title="@Html.GetLabel("G_Link_AddRoad_Title")" href="@Url.Action("AddRoad","Roads")">@Html.GetLabel("G_Link_AddRoad")</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                <!-- Language switching place -->
+                @foreach (var lang in CultureHelper.AvailableLanguages)
+                {
+                    <li>@Html.LanguageSelectorLink(lang, "[" + CultureHelper.FirstLetterUp(lang) + "]", CultureHelper.FirstLetterUp(lang), null)</li>    
+                }
+
+                @if (!User.Identity.IsAuthenticated)
+                {                
+                    <li><a title="@Html.GetLabel("G_Link_LogIn_Title")" href="@Url.Action("LogIn", "Roads")">@Html.GetLabel("G_Link_LogIn")</a></li>
+                }
+                else
+                {            
+                    <li><a title="@Html.GetLabel("G_Link_AdminZone_Title")" href="@Url.Action("SiteSettings", "AdminZone")">@Html.GetLabel("G_Link_AdminZone")</a></li>
+                    <li><a title="@Html.GetLabel("G_Link_LogOut_Title")" href="@Url.Action("LogOut", "Roads")">@Html.GetLabel("G_Link_LogOut")</a></li>
+                }
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
