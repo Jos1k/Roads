@@ -64,7 +64,7 @@
                     url: "@Url.Action("RoadGrigResult", "Roads")",
                     type: "POST",
                     traditional: true,
-                    data: {model: $('#searchFormId').serialize(), isRouteValidation: $('#isRouteValidationPerSearch').prop('checked')},
+                    data: {model: JSON.stringify($('#searchFormId').serializeObject()).replace(/SearchResult./g, ''), isRouteValidation: $('#isRouteValidationPerSearch').prop('checked')},
                     success: function(data) {
                         $("#divResultPage").html(data);
                     }
@@ -73,6 +73,23 @@
                 //$("#searchFormId").submit();
             }
         }
+
+        $.fn.serializeObject = function()
+        {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
     </script>
 
     using (@Html.BeginHtmlFieldPrefix("SearchResult"))

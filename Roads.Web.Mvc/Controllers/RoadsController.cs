@@ -68,7 +68,17 @@ namespace Roads.Web.Mvc.Controllers
         [HttpPost]
 		public ActionResult RoadGrigResult( string model, bool isRouteValidation )
         {
-			FindRoadModel modelStrongTyped = JsonConvert.DeserializeObject<FindRoadModel>( model);
+			dynamic modelDynamic = JsonConvert.DeserializeObject( model );
+
+			FindRoadModel modelStrongTyped = new Models.FindRoadModel() {
+				OriginCityNodeId = (int)modelDynamic.OriginCityNodeId,
+				DestinationCityNodeId = (int)modelDynamic.DestinationCityNodeId,
+				SearchResult = new Models.ListRoadsViewModel() {
+					PageNumber = (int)modelDynamic.PageNumber,
+					RecordsPerPage = (int)modelDynamic.RecordsPerPage,
+					NumberOfFound = (int)modelDynamic.NumberOfFound
+				}
+			};
 			modelStrongTyped.SearchResult = RoadHelper.GetSearchResultFor( client, modelStrongTyped, isRouteValidation );
 
 			return PartialView( "Partial/FindRoadSearchResult", modelStrongTyped );
