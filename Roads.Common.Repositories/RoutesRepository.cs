@@ -613,13 +613,13 @@ namespace Roads.Common.Repositories {
 				}
 			}
 			requestBuilder.Append( "&mode=driving" );
+			requestBuilder.Append( "&key=AIzaSyDagV9wfy0HxBPjCZti7NdVIUrcdtQqgoU" );
 
-
-			using( var data = new WebClient().OpenRead( requestBuilder.ToString() ) ) {
+			using( var data = await new WebClient().OpenReadTaskAsync( requestBuilder.ToString() ) ) {
 				if( data == null ) return true;
 
 				using( var reader = new StreamReader( data ) ) {
-					dynamic responce = JsonConvert.DeserializeObject( reader.ReadToEnd() );
+					dynamic responce = JsonConvert.DeserializeObject(await reader.ReadToEndAsync() );
 					if( responce.status == "OK" ) {
 						long reccomendedDistance = long.Parse(
 							responce
