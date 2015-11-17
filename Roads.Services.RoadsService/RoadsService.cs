@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using Roads.Common.Integrations;
 using Roads.Common.Managers;
 using Roads.Common.Models;
@@ -535,13 +536,13 @@ namespace Roads.Services.RoadsService
         /// <returns>
         /// The list of <see cref="RoutesSearchResultData" />
         /// </returns>
-		public RoutesSearchResultData GetRoadsFor( int startedCityId, int destinationCityId, int page, string languageName, bool isRouteValidation )
+		public async Task<RoutesSearchResultData> GetRoadsFor( int startedCityId, int destinationCityId, int page, string languageName, bool isRouteValidation )
         {
             try
             {
                 using (var manager = new RoadsManager())
                 {
-					return manager.GetRoutesSearchResult( startedCityId, destinationCityId, page, languageName, isRouteValidation );
+					return await manager.GetRoutesSearchResult( startedCityId, destinationCityId, page, languageName, isRouteValidation );
                 }
             }
             catch (Exception ex)

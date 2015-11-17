@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using Roads.Common.Models;
 using Roads.Common.Models.DataContract;
 
@@ -157,7 +158,7 @@ namespace Roads.Services.RoadsService
             #endregion
 
         [OperationContract]
-		RoutesSearchResultData GetRoadsFor( int startedCityId, int destinationCityId, int page, string languageName, bool isRouteValidation );
+		Task<RoutesSearchResultData> GetRoadsFor( int startedCityId, int destinationCityId, int page, string languageName, bool isRouteValidation );
 
         /// <summary>
         /// Gets the user identifier or create new if not exist.

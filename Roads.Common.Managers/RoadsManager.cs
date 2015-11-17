@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading.Tasks;
 using Roads.Common.Models;
 using Roads.Common.Models.DataContract;
 using Roads.Common.Repositories;
@@ -262,11 +263,11 @@ namespace Roads.Common.Managers
         /// <returns>
         /// The <see cref="RoutesSearchResultData" /> result.
         /// </returns>
-		public RoutesSearchResultData GetRoutesSearchResult( int startedCityId, int destinationCityId, int page, string languageName, bool isRouteValidation )
+		public async Task<RoutesSearchResultData> GetRoutesSearchResult( int startedCityId, int destinationCityId, int page, string languageName, bool isRouteValidation )
         {
             BuildRoutes(startedCityId, destinationCityId);
 
-            var result = _routeRepository.GetRoutesSearchResultData(
+            var result = await _routeRepository.GetRoutesSearchResultData(
                 GetPointId(true, startedCityId, destinationCityId),
                 GetPointId(false, startedCityId, destinationCityId),
                 page,
